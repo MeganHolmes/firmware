@@ -1,0 +1,4 @@
+# firmware/src/sconscript
+
+env = Environment()
+env.Program(source="demo/helloWorld/helloWorld.c")

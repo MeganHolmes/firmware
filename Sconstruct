@@ -1,0 +1,5 @@
+# firmware/Sconstruct
+
+
+VariantDir('build', 'src', duplicate=False)
+SConscript('build/SConscript')
