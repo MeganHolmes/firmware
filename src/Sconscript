@@ -1,0 +1,19 @@
+# firmware/src/sconscript
+
+import json
+
+Import('env', 'project')
+
+
+buildOptions = json.loads(File('buildOptions.json').get_text_contents())
+
+if project not in buildOptions:
+    print(f"Invalid project '{project}'. Available projects: {', '.join(buildOptions.keys())}")
+    Exit(1)
+
+sources = buildOptions[project]['sourceList']
+outputName = buildOptions[project]['outputName']
+
+
+# Build the selected target
+env.Program(source=sources, target=outputName)

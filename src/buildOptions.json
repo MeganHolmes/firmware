@@ -1,0 +1,8 @@
+{
+    "helloWorld": {
+        "outputName": "helloWorld.exe",
+        "sourceList": [
+            "projectSpecific/helloWorld/helloWorld.c"
+        ]
+    }
+}
