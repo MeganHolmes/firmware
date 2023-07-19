@@ -8,6 +8,6 @@ Controllers in use: STM32F013RB
 ### Hello World
 Prints hello world on the console on Windows. This exists for when I was setting up SCons.
 
-Project Specific Files: ```src/demo/helloWorld/```
+Project Specific Files: ```src/projectSpecific/helloWorld/```
 
 Build command: ```scons --project=helloWorld```
