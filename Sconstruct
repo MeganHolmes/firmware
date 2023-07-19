@@ -1,5 +1,13 @@
 # firmware/Sconstruct
 
+AddOption('--project', dest='project', type='string', nargs=1, action='store', help='Project to build')
+
+if not GetOption('project'):
+    print('Please specify a project to build using --project')
+    Exit(1)
+
+env = Environment()
+project=GetOption('project')
 
 VariantDir('build', 'src', duplicate=False)
-SConscript('build/SConscript')
+SConscript(f'build/SConscript', exports='env project')
