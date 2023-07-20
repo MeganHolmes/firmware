@@ -1,6 +1,13 @@
 # firmware/Sconstruct
 
+import os
+
+# Starting SCons
+
 AddOption('--project', dest='project', type='string', nargs=1, action='store', help='Project to build')
+AddOption('--buildOnly', dest='buildOnly', action='store_true', help='Skips linter and unit tests')
+AddOption('--skipTests', dest='skipTests', action='store_true', help='Skips unit tests')
+AddOption('--skipLinter', dest='skipLinter', action='store_true', help='Skips linter')
 
 if not GetOption('project'):
     print('Please specify a project to build using --project')
@@ -11,3 +18,11 @@ project=GetOption('project')
 
 VariantDir('build', 'src', duplicate=False)
 SConscript(f'build/SConscript', exports='env project')
+
+# Running linter
+if not GetOption('buildOnly') and not GetOption('skipLinter'):
+    if not os.path.isdir("linterData"):
+        os.mkdir("linterData")
+
+    cppcheck_command = 'cppcheck --project=linter.cppcheck --platform=native -j8 src/ '
+    os.system(cppcheck_command)
