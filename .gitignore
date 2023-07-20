@@ -56,6 +56,10 @@ dkms.conf
 
 # Generated files
 build/
+__pycache__/
 
 # SCons
 .sconsign.dblite
+
+# Linter
+linterData/
