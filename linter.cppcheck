@@ -6,10 +6,6 @@
     <check-unused-templates>true</check-unused-templates>
     <max-ctu-depth>2</max-ctu-depth>
     <max-template-recursion>100</max-template-recursion>
-    <exclude>
-        <path name="src/shared/RTOS/"/>
-        <path name="src/processorSpecific/ST/STM32F01/RTOS/"/>
-    </exclude>
     <safe-checks>
         <class-public/>
     </safe-checks>
