@@ -1,9 +1,27 @@
 # firmware/src/sconscript
 
 import json
+import os
+
+def ensureGeneratedDirsExist(projectDir):
+    if not os.path.isdir("projectSpecific"):
+        os.mkdir("projectSpecific")
+        print("Created projectSpecific/")
+
+    if not os.path.isdir(projectDir):
+        os.mkdir(projectDir)
+        print("Created " + projectDir)
+
+    if not os.path.isdir(projectDir + "/generated"):
+        os.mkdir(projectDir + "/generated")
+        print("Created " + projectDir + "/generated")
+
+    if not os.path.isdir(projectDir + "/generated/HW"):
+        os.mkdir(projectDir + "/generated/HW")
+        print("Created " + projectDir + "/generated/HW")
+
 
 Import('env', 'project')
-
 
 buildOptions = json.loads(File('buildOptions.json').get_text_contents())
 
@@ -13,7 +31,21 @@ if project not in buildOptions:
 
 sources = buildOptions[project]['sourceList']
 outputName = buildOptions[project]['outputName']
+projectDir = buildOptions[project]['projectDir']
+mainFile = projectDir + "/" + buildOptions[project]['mainFile']
+
+processorDir = None
+if 'processorDir' in buildOptions[project]:
+    processorDir = buildOptions[project]['processorDir']
+
+ensureGeneratedDirsExist(projectDir)
+
+# Generate the pinConfig files
+if processorDir is not None:
+    generatedSources = env.SConscript(processorDir + "/SConscript", exports='projectDir')
+    sources.extend(generatedSources)
 
 
 # Build the selected target
-env.Program(source=sources, target=outputName)
+print("Starting build")
+env.Program(source=mainFile, target=outputName)

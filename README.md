@@ -5,6 +5,11 @@ This repo is a collection of all firmware related code I have written or used. T
 Controllers in use: STM32F013RB
 
 ## Individual projects:
+### Blinky
+Flahses an LED every 1s. This exists for when I was setting up SCons to compile for ARM.
+
+Project Specific Files: ```src/projectSpecific/blinky/```
+Build command: ```scons --project=blinky```
 ### Hello World
 Prints hello world on the console on Windows. This exists for when I was setting up SCons.
 

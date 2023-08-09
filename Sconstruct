@@ -24,5 +24,6 @@ if not GetOption('buildOnly') and not GetOption('skipLinter'):
     if not os.path.isdir("linterData"):
         os.mkdir("linterData")
 
+    print("Running linter")
     cppcheck_command = 'cppcheck --project=linter.cppcheck --platform=native -j8 src/ '
     os.system(cppcheck_command)
