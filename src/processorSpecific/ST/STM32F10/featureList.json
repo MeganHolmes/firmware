@@ -1,0 +1,11 @@
+{
+    "FEATURE_GPIO": {
+        "SOURCES": ["manufacturer/stm32f10x_gpio.c",
+                    "{BUILD}/{PROJECTSPECIFIC}/generated/HW_GPIO_generated.c"],
+        "REQUIRED_FEATURES": []
+    },
+    "FEATURE_RTOS": {
+        "SOURCES": ["RTOS/port.c"],
+        "REQUIRED_FEATURES": []
+    }
+}

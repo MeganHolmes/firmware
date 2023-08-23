@@ -1,0 +1,12 @@
+#ifndef __APP_LED_PROJECTSPECIFIC_H__
+#define __APP_LED_PROJECTSPECIFIC_H__
+
+enum APP_LED_ID
+{
+    APP_LED_NUCLEO_LED,
+    APP_LED_COUNT
+};
+
+
+
+#endif // __APP_LED_PROJECTSPECIFIC_H__

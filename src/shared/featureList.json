@@ -1,0 +1,17 @@
+{
+    "FEATURE_LED": {
+        "SOURCES": ["app/app_led.c"],
+        "REQUIRED_FEATURES": ["FEATURE_GPIO"]
+    },
+    "FEATURE_LED_HEARTBEAT": {
+        "SOURCES": ["app/app_led_heartbeat.c"],
+        "REQUIRED_FEATURES": ["FEATURE_LED"]
+    },
+    "FEATURE_RTOS": {
+        "SOURCES": ["RTOS/heap_1,c",
+                    "RTOS/list.c",
+                    "RTOS/queue.c",
+                    "RTOS/tasks.c"],
+        "REQUIRED_FEATURES": []
+    }
+}

@@ -1,0 +1,20 @@
+These instructions are for Windows machines. If I start doing more development on Linux I'll update instructions for that platform as well.
+
+
+Install Python 3: https://www.python.org/downloads/
+Install Pip if not already installed with Python.
+Install SCons using Pip "pip install scons"
+Install Visual Studio compiler. You don't need the IDE, just the compiler for C on Windows and embedded. https://visualstudio.microsoft.com/vs/community/
+Install Cppcheck: https://cppcheck.sourceforge.io/
+Add Cppcheck directory to PATH:
+    directory: C:\Program Files\Cppcheck
+    Modifying Path:
+        1. Windows key + "edit the system environment variables"
+        2. Select "Environment Variables"
+        3. Select Path then click New
+        4. Copy the directory and save it.
+Restart terminal if you had it open.
+In the top-level firmware/ directory run scons --project=helloWorld
+
+
+Eventually I might setup a container or automated install script for this.

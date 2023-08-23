@@ -1,0 +1,6 @@
+{
+    "FEATURE_LED": {
+        "SOURCES": ["app/app_led_projectSpecific.c"],
+        "REQUIRED_FEATURES": ["FEATURE_GPIO"]
+    }
+}
