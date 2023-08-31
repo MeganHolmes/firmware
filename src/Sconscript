@@ -34,6 +34,9 @@ outputName = buildOptions[project]['outputName']
 projectDir = buildOptions[project]['projectDir']
 mainFile = projectDir + "/" + buildOptions[project]['mainFile']
 
+sources.insert(0, mainFile)
+
+
 processorDir = None
 if 'processorDir' in buildOptions[project]:
     processorDir = buildOptions[project]['processorDir']
@@ -42,8 +45,14 @@ ensureGeneratedDirsExist(projectDir)
 
 # Generate the pinConfig files
 if processorDir is not None:
-    generatedSources = env.SConscript(processorDir + "/SConscript", exports='projectDir')
+    generatedSources = env.SConscript(processorDir + "/SConscript", exports='projectDir env')
     sources.extend(generatedSources)
+
+# Include directories in cpppath
+# env.Append(CPPPATH = [projectDir, 'shared/app', 'shared/RTOS', projectDir + '/app'])
+env.Append(CPPPATH = ['processorSpecific\ST\STM32F10\manufacturer'])
+
+
 
 # TODO: Create a list of all features that are enabled, and include how they were turned on. From manual featureSelections
 # or from being activated by higher-level features. Output it to console but also to a file in the build directory.
@@ -53,4 +62,4 @@ if processorDir is not None:
 
 # Build the selected target
 print("Starting build")
-env.Program(source=mainFile, target=outputName)
+env.Program(source=sources, target=outputName)

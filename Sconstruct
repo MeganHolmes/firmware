@@ -13,11 +13,11 @@ if not GetOption('project'):
     print('Please specify a project to build using --project')
     Exit(1)
 
-env = Environment(CPPPATH = ['.'])
+env = Environment(tools = ['mingw'])
 project=GetOption('project')
 
 VariantDir('build', 'src', duplicate=False)
-SConscript(f'build/SConscript', exports='env project')
+SConscript(f'src/SConscript', exports='env project')
 
 # Running linter
 if not GetOption('buildOnly') and not GetOption('skipLinter'):
