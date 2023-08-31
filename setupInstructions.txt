@@ -18,6 +18,3 @@ In the top-level firmware/ directory run scons --project=helloWorld
 
 
 Eventually I might setup a container or automated install script for this.
-
-
-https://osdn.net/projects/mingw/downloads/68260/mingw-get-setup.exe/
