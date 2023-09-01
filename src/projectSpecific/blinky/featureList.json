@@ -1,6 +1,6 @@
 {
-    "FEATURE_LED": {
-        "SOURCES": ["app/app_led_projectSpecific.c"],
-        "REQUIRED_FEATURES": ["FEATURE_GPIO"]
+    "FEATURE_GPIO": {
+        "SOURCES": ["projectSpecific/blinky/generated/HW/HW_GPIO_generated.c"],
+        "DEPENDENCIES": []
     }
 }

@@ -1,4 +1,7 @@
 {
+    "FEATURE_STM32F10": {
+        "active": true
+    },
     "FEATURE_LED_HEARTBEAT": {
         "active": true
     }

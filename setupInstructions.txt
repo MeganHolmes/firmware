@@ -16,5 +16,7 @@ Add Cppcheck directory to PATH:
 Restart terminal if you had it open.
 In the top-level firmware/ directory run scons --project=helloWorld
 
+For arm projects install the gcc arm compiler: https://developer.arm.com/downloads/-/arm-gnu-toolchain-downloads
+Install ST link driver: https://www.st.com/en/development-tools/stsw-link009.html
 
 Eventually I might setup a container or automated install script for this.

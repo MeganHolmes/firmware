@@ -2,16 +2,12 @@
     "helloWorld": {
         "outputName": "helloWorld.exe",
         "projectDir": "projectSpecific/helloWorld",
-        "mainFile": "helloWorld.c",
-        "sourceList": []
+        "mainFile": "helloWorld.c"
     },
     "blinky": {
         "outputName": "blinky.exe",
         "projectDir": "projectSpecific/blinky",
         "processorDir": "processorSpecific/ST/STM32F10",
-        "mainFile": "blinky.c",
-        "sourceList": [
-            "shared/app/app_led.c"
-        ]
+        "mainFile": "blinky.c"
     }
 }
