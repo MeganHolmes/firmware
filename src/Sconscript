@@ -80,11 +80,28 @@ env.Append(CPPPATH = [projectDir, 'shared/app', 'shared/RTOS', projectDir + '/ap
 
 
 # TODO: Create a list of all features that are enabled, and include how they were turned on. From manual featureSelections
-# or from being activated by higher-level features. Output it to console but also to a file in the build directory.
+# or from being activated by higher-level features.
 # TODO: Make a scanner to parse the featureSelections file and ensure that if a higher-level feature is enabled, all
 # of its dependencies are either not defined (and will be automatically defined) or are defined and active. If there
 # are any dependencies that are defined but not active, print a warning to the console and exit.
 # TODO: Seperate this file into more functions.
+
+# Write all features, source files, and include paths to a log file
+with open(projectDir + "/generated/buildLog.txt", "w") as logFile: # TODO: Move this to build directory
+    if verbose:
+        print("Writing build log")
+
+    logFile.write("Features enabled:\n")
+    for feature in featuresEnabled:
+        logFile.write("  " + feature + "\n")
+    logFile.write("Sources found:\n")
+    for source in sources:
+        logFile.write("  " + source + "\n")
+    logFile.write("Include paths:\n")
+    for path in env['CPPPATH']:
+        logFile.write("  " + path + "\n")
+    logFile.close()
+
 
 # Build the selected target
 print("Starting build")
@@ -98,6 +115,6 @@ if verbose:
     print("  Include paths:")
     for path in env['CPPPATH']:
         print("    " + path)
-    print(env.Dump())
+    # print(env.Dump()) # Uncomment to check all environment variables
 
 env.Program(source=sources, target=outputName)
