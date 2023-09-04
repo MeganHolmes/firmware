@@ -18,8 +18,8 @@ env = Environment(tools = ['mingw'])
 project=GetOption('project')
 verbose=GetOption('verbose')
 
-# VariantDir('build', 'src', duplicate=False)
-SConscript(f'src/SConscript', exports='env project verbose')
+VariantDir('build', 'src', duplicate=False)
+SConscript(f'build/SConscript', exports='env project verbose')
 
 # Running linter
 if not GetOption('buildOnly') and not GetOption('skipLinter'):

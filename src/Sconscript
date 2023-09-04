@@ -3,25 +3,45 @@
 from __future__ import absolute_import
 import json
 import os
-from tools.buildTools import processFeature
+from src.tools.buildTools import processFeature
 
 def ensureGeneratedDirsExist(projectDir):
     print("Generating directories")
-    if not os.path.isdir("projectSpecific"):
-        os.mkdir("projectSpecific")
-        print("Created projectSpecific/")
+    if not os.path.isdir("../build"):
+        os.mkdir("../build")
+        print("Created build/")
 
-    if not os.path.isdir(projectDir):
-        os.mkdir(projectDir)
+    if not os.path.isdir("../build/projectSpecific"):
+        os.mkdir("../build/projectSpecific")
+        print("Created build/projectSpecific/")
+
+    if not os.path.isdir("../build/" + projectDir):
+        os.mkdir("../build/" + projectDir)
         print("Created " + projectDir)
 
-    if not os.path.isdir(projectDir + "/generated"):
-        os.mkdir(projectDir + "/generated")
+    if not os.path.isdir("../build/" + projectDir + "/generated"):
+        os.mkdir("../build/" + projectDir + "/generated")
         print("Created " + projectDir + "/generated")
 
-    if not os.path.isdir(projectDir + "/generated/HW"):
-        os.mkdir(projectDir + "/generated/HW")
+    if not os.path.isdir("../build/" + projectDir + "/generated/HW"):
+        os.mkdir("../build/" + projectDir + "/generated/HW")
         print("Created " + projectDir + "/generated/HW")
+
+def checkForDuplicates(features, sources):
+    for feature in features:
+        if features.count(feature) > 1:
+            print(f"Duplicate feature {feature} found")
+            Exit(1)
+
+    for source in sources:
+        if sources.count(source) > 1:
+            print(f"Duplicate source {source} found")
+            Exit(1)
+
+    for path in env['CPPPATH']:
+        if env['CPPPATH'].count(path) > 1:
+            print(f"Duplicate include path {path} found")
+            Exit(1)
 
 
 Import('env', 'project', 'verbose')
@@ -101,8 +121,12 @@ with open(projectDir + "/generated/buildLog.txt", "w") as logFile: # TODO: Move 
     logFile.close()
 
 
+if verbose:
+    print("Checking for duplicate features, sources, and include paths")
+checkForDuplicates(featuresEnabled, sources)
+
 # Build the selected target
-print("Starting build")
+print("Starting build:")
 if verbose:
     print("  Features enabled:")
     for feature in featuresEnabled:

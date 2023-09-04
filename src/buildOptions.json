@@ -5,7 +5,7 @@
         "mainFile": "helloWorld.c"
     },
     "blinky": {
-        "outputName": "blinky.exe",
+        "outputName": "blinky.hex",
         "projectDir": "projectSpecific/blinky",
         "processorDir": "processorSpecific/ST/STM32F10",
         "mainFile": "blinky.c"
