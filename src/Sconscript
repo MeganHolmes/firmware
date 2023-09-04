@@ -55,15 +55,13 @@ projectSpecificFeatureList = json.loads(File(projectDir + '/featureList.json').g
 featuresEnabled = []
 for feature in featureSelections:
     if featureSelections[feature]['active'] is True:
-        featuresEnabled, newSources = processFeature(feature, featuresEnabled, sharedFeatureList, verbose)
-        sources.extend(newSources)
+        featuresEnabled, sources = processFeature(feature, featuresEnabled, sources, sharedFeatureList, verbose)
 
 if verbose:
     print("  Starting project specific feature scan")
 for feature in featuresEnabled:
     if feature in projectSpecificFeatureList:
-        featuresEnabled, newSources = processFeature(feature, featuresEnabled, projectSpecificFeatureList, verbose)
-        sources.extend(newSources)
+        featuresEnabled, sources = processFeature(feature, featuresEnabled, sources, projectSpecificFeatureList, verbose)
 
 # Generate the pinConfig files
 if processorDir is not None:
