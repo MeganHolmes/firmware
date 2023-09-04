@@ -79,36 +79,45 @@ def generateGPIOCFile(projectDir, gpioData):
         gpioFile.close()
 
 def setupEnvForArm(env):
-    # From: https://elektronotes.wordpress.com/2015/02/05/using-scons-with-gnu-toolchain-for-arm-on-windows-part-3-the-scons-script/
+    # Orignally From: https://elektronotes.wordpress.com/2015/02/05/using-scons-with-gnu-toolchain-for-arm-on-windows-part-3-the-scons-script/
+    # Comments after each line added by me to ensure full understanding of what is happening.
+    # I also disabled options that I don't know what they do or don't seem to be needed. In general fewer options is better.
     env['AR'] = 'arm-none-eabi-ar'
     env['AS'] = 'arm-none-eabi-as'
     env['CC'] = 'arm-none-eabi-gcc'
     env['CXX'] = 'arm-none-eabi-g++'
-    env['LINK'] = 'arm-none-eabi-g++'                # predefined is 'arm-none-eabi-gcc'
+    env['LINK'] = 'arm-none-eabi-g++'
     env['RANLIB'] = 'arm-none-eabi-ranlib'
     env['OBJCOPY'] = 'arm-none-eabi-objcopy'
     env['PROGSUFFIX'] = '.elf'
 
+    # Optimization Notes. Below are options that I might use.
+    # -O0 = Reduce compilation time and make debugging produce the expected results. Use for fast compiles.
+    # -03 = the compiler tries to reduce code size and execution time. Still maintains standards compliance unlike -Ofast. Use for production unless size is a concern.
+    # -Og = Optimize debugging experience. Use for use with debuggers.
+    # -Oz = Optimize for size. Similar to -Os but more aggressive. Use for size constrained environments.
+    # Full list: https://gcc.gnu.org/onlinedocs/gcc/Optimize-Options.html
+
     # compiler flags
     env.Append(CCFLAGS = [
-    '-mcpu=cortex-m3',
-    '-mthumb',
-    '-O2',
-    '-fsigned-char',
-    '-ffunction-sections',
-    '-fdata-sections',
-    '-std=gnu11',
-    '-fmessage-length=0',
-    '-mthumb-interwork',
+    '-mcpu=cortex-m3', # Specify the CPU to compile for.
+    # '-mthumb', # Something to do with different instruction sets.
+    '-O0', # Currently using for fast compile since other considerations aren't important yet.
+    # '-fsigned-char', #  Let the type char be signed, like signed char. Don't know why I would need this right now.
+    # '-ffunction-sections', #  Place each function or data item into its own section in the output file if the target supports arbitrary sections. Tries to reduce file size but that's not an issue right now
+    # '-fdata-sections', # Same as above but for data.
+    '-std=gnu17', # Determine the language standard. Using newest GNU version until C23 is released. Mostly so I can use 0b binary literals.
+    # '-fmessage-length=0', # formats error messages to fit on lines of n characters. I don't care about this right now.
+    # '-mthumb-interwork', # Something to do with different instruction sets
     ])
 
 # linker flags
     env.Append(LINKFLAGS = [
-    '-ffunction-sections',
-    '-fdata-sections',
-    '-Tsrc/processorSpecific/ST/STM32F10/manufacturer/stm32f10x_flash_ROArray.ld',
-    '-Xlinker',
-    '--gc-sections'
+    # '-ffunction-sections', # See above explanations
+    # '-fdata-sections',
+    '-Tsrc/processorSpecific/ST/STM32F10/manufacturer/stm32f10x_flash_ROArray.ld', # Specify the linker script.
+    # '-Xlinker', # Pass the following argument to the linker.
+    # '--gc-sections'
     # '--specs=nano.specs',
     ])
 

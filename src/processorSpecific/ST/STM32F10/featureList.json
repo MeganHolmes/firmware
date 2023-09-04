@@ -1,14 +1,20 @@
 {
     "FEATURE_STM32F10": {
-        "SOURCES": ["processorSpecific/ST/STM32F10/manufacturer/core_cm3.c"],
+        "SOURCES": ["processorSpecific/ST/STM32F10/manufacturer/core_cm3.c",
+                    "processorSpecific/ST/STM32F10/manufacturer/system_stm32f10x.c",
+                    "processorSpecific/ST/STM32F10/manufacturer/startup_stm32f10x_md_vl.s"],
         "DEPENDENCIES": []
     },
     "FEATURE_GPIO": {
         "SOURCES": ["processorSpecific/ST/STM32F10/manufacturer/stm32f10x_gpio.c"],
-        "DEPENDENCIES": []
+        "DEPENDENCIES": ["FEATURE_RCC"]
     },
     "FEATURE_RTOS": {
         "SOURCES": ["processorSpecific/ST/STM32F10/RTOS/port.c"],
+        "DEPENDENCIES": []
+    },
+    "FEATURE_RCC": {
+        "SOURCES": ["processorSpecific/ST/STM32F10/manufacturer/stm32f10x_rcc.c"],
         "DEPENDENCIES": []
     }
 }
