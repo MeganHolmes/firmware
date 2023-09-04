@@ -105,7 +105,7 @@ env.Append(CPPPATH = [projectDir, 'shared/app', 'shared/RTOS', projectDir + '/ap
 # TODO: Seperate this file into more functions.
 
 # Write all features, source files, and include paths to a log file
-with open(projectDir + "/generated/buildLog.txt", "w") as logFile: # TODO: Move this to build directory
+with open("../build/" + projectDir + "/buildLog.txt", "w") as logFile:
     if verbose:
         print("Writing build log")
 
