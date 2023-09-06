@@ -4,9 +4,8 @@ from __future__ import absolute_import
 import json
 from src.tools.buildTools import processFeature
 
-# TODO: Be smarter about the paths and the backtracking.
-# TODO: Consider tracking pads to ensure the same pad isn't defined for two things. Could also be done in a dedicated json checker before this step
-# TODO: Change how the init is done so we don't waste time creating structs and assigning the default values. Change it so it's defined at compile time and we just call the init() functions.
+# TODO: https://github.com/MeganHolmes/firmware/issues/14 Be smarter about the paths and the backtracking.
+# TODO: https://github.com/MeganHolmes/firmware/issues/13 Consider tracking pads to ensure the same pad isn't defined for two things. Could also be done in a dedicated json checker before this step
 
 def pinConfig(projectDir, verbose):
 

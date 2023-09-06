@@ -98,16 +98,16 @@ if processorDir is not None:
 # Add the main file
 sources.insert(0, mainFile)
 
-# Include directories in cpppath. TODO: Make this less hard-coded
+# TODO: https://github.com/MeganHolmes/firmware/issues/14 Make this less hard-coded
 env.Append(CPPPATH = [projectDir, 'shared/app', 'shared/RTOS', projectDir + '/app', projectDir + '/generated/HW'])
 
 
-# TODO: Create a list of all features that are enabled, and include how they were turned on. From manual featureSelections
+# TODO: https://github.com/MeganHolmes/firmware/issues/12 Create a list of all features that are enabled, and include how they were turned on. From manual featureSelections
 # or from being activated by higher-level features.
-# TODO: Make a scanner to parse the featureSelections file and ensure that if a higher-level feature is enabled, all
+# TODO: https://github.com/MeganHolmes/firmware/issues/12 Make a scanner to parse the featureSelections file and ensure that if a higher-level feature is enabled, all
 # of its dependencies are either not defined (and will be automatically defined) or are defined and active. If there
 # are any dependencies that are defined but not active, print a warning to the console and exit.
-# TODO: Seperate this file into more functions.
+# TODO: https://github.com/MeganHolmes/firmware/issues/14 Seperate this file into more functions.
 
 # Write all features, source files, and include paths to a log file
 with open("../build/" + projectDir + "/buildLog.txt", "w") as logFile:

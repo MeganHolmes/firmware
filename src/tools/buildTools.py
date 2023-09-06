@@ -21,6 +21,6 @@ def processFeature(feature, featuresEnabled, sources, featureList, verbose):
                 featuresEnabled, sources = processFeature(dependency, featuresEnabled, sources, featureList, verbose)
     else:
         pass
-        # TODO: save this info somewhere and pass it back. We can later use this to make sure that all features have been found somewhere
+        # TODO: https://github.com/MeganHolmes/firmware/issues/12: save this info somewhere and pass it back. We can later use this to make sure that all features have been found somewhere
 
     return featuresEnabled, sources
