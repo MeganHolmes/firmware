@@ -5,27 +5,32 @@ import json
 import os
 from src.tools.buildTools import processFeature
 
-def ensureGeneratedDirsExist(projectDir):
+def ensureGeneratedDirsExist(projectDir, verbose):
     print("Generating directories")
     if not os.path.isdir("../build"):
         os.mkdir("../build")
-        print("Created build/")
+        if verbose:
+            print("Created build/")
 
     if not os.path.isdir("../build/projectSpecific"):
         os.mkdir("../build/projectSpecific")
-        print("Created build/projectSpecific/")
+        if verbose:
+            print("Created build/projectSpecific/")
 
     if not os.path.isdir("../build/" + projectDir):
         os.mkdir("../build/" + projectDir)
-        print("Created " + projectDir)
+        if verbose:
+            print("Created " + projectDir)
 
     if not os.path.isdir("../build/" + projectDir + "/generated"):
         os.mkdir("../build/" + projectDir + "/generated")
-        print("Created " + projectDir + "/generated")
+        if verbose:
+            print("Created " + projectDir + "/generated")
 
     if not os.path.isdir("../build/" + projectDir + "/generated/HW"):
         os.mkdir("../build/" + projectDir + "/generated/HW")
-        print("Created " + projectDir + "/generated/HW")
+        if verbose:
+            print("Created " + projectDir + "/generated/HW")
 
 def checkForDuplicates(features, sources):
     for feature in features:
@@ -62,7 +67,7 @@ processorDir = None
 if 'processorDir' in buildOptions[project]:
     processorDir = buildOptions[project]['processorDir']
 
-ensureGeneratedDirsExist(projectDir)
+ensureGeneratedDirsExist(projectDir, verbose)
 
 sources = []
 

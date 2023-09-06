@@ -1,6 +1,1 @@
-{
-    "FEATURE_GPIO": {
-        "SOURCES": ["projectSpecific/blinky/generated/HW/HW_GPIO_generated.c"],
-        "DEPENDENCIES": []
-    }
-}
+{}
