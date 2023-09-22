@@ -82,15 +82,21 @@ def setupEnvForArm(env):
     # compiler flags
     env.Append(CCFLAGS = [
     '-mcpu=cortex-m3', # Specify the CPU to compile for.
-    '-mthumb', # Something to do with different instruction sets.
-    '-O0', # Currently using for fast compile since other considerations aren't important yet.
+    # '-mthumb', # Something to do with different instruction sets.
+    '-Og',
     # '-fsigned-char', #  Let the type char be signed, like signed char. Don't know why I would need this right now.
     # '-ffunction-sections', #  Place each function or data item into its own section in the output file if the target supports arbitrary sections. Tries to reduce file size but that's not an issue right now
     # '-fdata-sections', # Same as above but for data.
-    '-std=gnu17', # Determine the language standard. Using newest GNU version until C23 is released. Mostly so I can use 0b binary literals.
+    '-std=c11', # Determine the language standard. Using newest GNU version until C23 is released. Mostly so I can use 0b binary literals.
     # '-fmessage-length=0', # formats error messages to fit on lines of n characters. I don't care about this right now.
-    '-mthumb-interwork', # Something to do with different instruction sets
+    # '-mthumb-interwork', # Something to do with different instruction sets
     '-march=armv7-m',
+    '--save-temps', # Save intermediate files for debugging.
+    '-fverbose-asm', # Add extra comments to the assembly code. Useful for debugging.
+    '-Wall', # Enable all warnings. Useful for debugging.
+    '-Wextra', # Enable extra warnings. Useful for debugging.
+    # '-Werror', # Treat warnings as errors. Useful for debugging. # TODO: Enable this after https://github.com/MeganHolmes/firmware/issues/15 is fixed
+    '-g', # Produce debugging information. Useful for debugging.
     ])
 
 # linker flags
