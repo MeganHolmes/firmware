@@ -14,7 +14,7 @@ if not GetOption('project'):
     print('Please specify a project to build using --project')
     Exit(1)
 
-env = Environment(tools = ['mingw'])
+env = Environment(tools = ['mingw'], ENV = {'PATH' : os.environ['PATH']})
 project=GetOption('project')
 verbose=GetOption('verbose')
 
