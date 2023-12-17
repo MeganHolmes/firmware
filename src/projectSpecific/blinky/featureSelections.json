@@ -3,7 +3,7 @@
         "active": true
     },
     "FEATURE_GPIO": {
-        "active": true
+        "active": false
     },
     "FEATURE_LED_HEARTBEAT": {
         "active": false
