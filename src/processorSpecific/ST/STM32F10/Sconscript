@@ -111,6 +111,7 @@ def setupEnvForArm(env):
     # '--gc-sections',
     # '--specs=nosys.specs', # Fixes the _exit linking issue. Something to do with compiling for ARM on x86.
     # '--specs=nano.specs',
+    '-g',
     ])
 
 

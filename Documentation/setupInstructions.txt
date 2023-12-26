@@ -21,3 +21,5 @@ Install ST link driver: https://www.st.com/en/development-tools/stsw-link009.htm
 For STM32 programming: https://www.st.com/en/development-tools/stm32cubeprog.html
 
 Eventually I might setup a container or automated install script for this.
+
+https://github.com/stlink-org/stlink

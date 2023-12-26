@@ -1,0 +1,6 @@
+In one terminal start the gdb server by using "st-util"
+In another terminal use the command "arm-none-eabi-gdb build\blinky.elf"
+type "load"
+Use "continue" to let the chip run
+Use ctrl+c to stop the chip
+Use "info register" to see the register information.
