@@ -6,13 +6,13 @@
 .thumb
 
 // Global memory locations.
-.global reset_handler
+.global Reset_Handler
 
 /*
  * The Reset handler. Called on reset.
  */
-.type reset_handler, %function
-reset_handler:
+.type Reset_Handler, %function
+Reset_Handler:
   // Set the stack pointer to the end of the stack.
   // The '_estack' value is defined in our linker script.
   LDR  r0, =_estack
@@ -28,4 +28,4 @@ reset_handler:
     ADDS r0, r0, #1
     // Loop back.
     B    main_loop
-.size reset_handler, .-reset_handler
+.size Reset_Handler, .-Reset_Handler

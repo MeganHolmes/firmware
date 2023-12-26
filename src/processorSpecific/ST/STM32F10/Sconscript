@@ -106,7 +106,7 @@ def setupEnvForArm(env):
     env.Append(LINKFLAGS = [
     # '-ffunction-sections', # See above explanations
     # '-fdata-sections',
-    '-Tsrc/processorSpecific/ST/STM32F10/startup/stm32f103rb_linker.ld', # Specify the linker script.
+    '-Tsrc\processorSpecific\ST\STM32F10\manufacturer\stm32_flash.ld', # Specify the linker script.
     # '-Xlinker', # Pass the following argument to the linker.
     # '--gc-sections',
     # '--specs=nosys.specs', # Fixes the _exit linking issue. Something to do with compiling for ARM on x86.
