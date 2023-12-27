@@ -14,7 +14,7 @@ int main(void)
 {
     // HW_GPIO_init();
     // app_led_init();
-    uint64_t counter = 0;
+    volatile uint64_t counter = 0;
     // GPIO_InitTypeDef gpio_init;
     // GPIO_StructInit(&gpio_init);
     // gpio_init.GPIO_Mode = GPIO_Mode_Out_PP;

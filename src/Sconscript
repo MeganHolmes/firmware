@@ -96,7 +96,7 @@ if processorDir is not None:
     sources.extend(generatedSources)
 
 # Add the main file
-# sources.insert(0, mainFile)
+sources.insert(0, mainFile)
 
 # TODO: https://github.com/MeganHolmes/firmware/issues/14 Make this less hard-coded
 # env.Append(CPPPATH = [projectDir, 'shared/app', 'shared/RTOS', projectDir + '/app', projectDir + '/generated/HW'])

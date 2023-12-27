@@ -1,6 +1,7 @@
 {
     "FEATURE_STM32F10": {
-        "SOURCES": ["processorSpecific/ST/STM32F10/startup/core.s"],
+        "SOURCES": ["processorSpecific/ST/STM32F10/manufacturer/startup_stm32f10x_md_vl.s",
+                    "processorSpecific/ST/STM32F10/manufacturer/system_stm32f10x.c"],
         "DEPENDENCIES": []
     },
     "FEATURE_GPIO": {

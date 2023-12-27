@@ -97,16 +97,16 @@ def setupEnvForArm(env):
     '-Wextra', # Enable extra warnings. Useful for debugging.
     # '-Werror', # Treat warnings as errors. Useful for debugging. # TODO: Enable this after https://github.com/MeganHolmes/firmware/issues/15 is fixed
     '-g', # Produce debugging information. Useful for debugging.
-    '-nostdlib',
-    '-standalone',
-    '-nostdinc',
+    # '-nostdlib',
+    # '-standalone',
+    # '-nostdinc',
     ])
 
     # linker flags
     env.Append(LINKFLAGS = [
     # '-ffunction-sections', # See above explanations
     # '-fdata-sections',
-    '-Tsrc\processorSpecific\ST\STM32F10\manufacturer\stm32_flash.ld', # Specify the linker script.
+    '-Tsrc/processorSpecific/ST/STM32F10/manufacturer/stm32_flash.ld', # Specify the linker script.
     # '-Xlinker', # Pass the following argument to the linker.
     # '--gc-sections',
     # '--specs=nosys.specs', # Fixes the _exit linking issue. Something to do with compiling for ARM on x86.

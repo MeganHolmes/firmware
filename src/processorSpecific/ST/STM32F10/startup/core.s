@@ -1,3 +1,4 @@
+// THIS FILE IS NO LONGER USED. DO NOT RUN.
 // These instructions define attributes of our chip and
 // the assembly language we'll use:
 .syntax unified

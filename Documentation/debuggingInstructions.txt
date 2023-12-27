@@ -5,3 +5,4 @@ type "load"
 Use "continue" to let the chip run
 Use ctrl+c to stop the chip
 Use "info register" to see the register information.
+use "info locals" to see local variables
