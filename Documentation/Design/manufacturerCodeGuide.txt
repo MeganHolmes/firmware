@@ -1,0 +1,9 @@
+This file documents all the files currently used in src\processorSpecific\ST\STM32F10\manufacturer
+Some information from https://vivonomicon.com/2018/04/22/bare-metal-stm32-programming-part-3-leds-and-buttons/
+
+stm32_flash.ld            - Linker script that sets memory locations for the elf file.
+startup_stm32f10x_md_vl.s - Assembly startup script that performs the first initialization operations on the chip before jumping to main().
+core_cm3                  - Files which provide some common ARM Cortex-M definitions and things like software helpers for things like setting
+                            up hardware interrupts.
+stm32f10x.h               - Definitions for which memory addresses go to which peripherals, and which bits do what.
+system_stm32f0xx.h        - Included by ST’s files because it is used in most of their auto-generated code.

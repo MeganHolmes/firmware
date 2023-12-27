@@ -22,12 +22,8 @@ int main(void)
     // gpio_init.GPIO_Mode = GPIO_Mode_Out_PP;
 
     // GPIO_Init(GPIOA, &gpio_init);
-    // GPIO_Init(GPIOB, &gpio_init);
-    // GPIO_Init(GPIOC, &gpio_init);
-    // GPIO_Init(GPIOD, &gpio_init);
-    // GPIO_Init(GPIOE, &gpio_init);
-    // GPIO_Init(GPIOF, &gpio_init);
-    // GPIO_Init(GPIOG, &gpio_init);
+
+    RCC->APB2ENR |= RCC_APB2ENR_IOPAEN;
     GPIOA->CRL = 0x22222222; // All GPIOs are output push-pull at 2MHz
     GPIOA->CRH = 0x22222222; // All GPIOs are output push-pull at 2MHz
 
@@ -35,7 +31,7 @@ int main(void)
     {
         counter++;
 
-        if (counter >= 10000000)
+        if (counter >= 1000000)
         {
             if (pin_is_on)
             {
@@ -51,11 +47,5 @@ int main(void)
         }
 
     //         GPIO_WriteBit(GPIOA, GPIO_Pin_All, Bit_SET);
-    //         GPIO_WriteBit(GPIOB, GPIO_Pin_All, Bit_SET);
-    //         GPIO_WriteBit(GPIOC, GPIO_Pin_All, Bit_SET);
-    //         GPIO_WriteBit(GPIOD, GPIO_Pin_All, Bit_SET);
-    //         GPIO_WriteBit(GPIOE, GPIO_Pin_All, Bit_SET);
-    //         GPIO_WriteBit(GPIOF, GPIO_Pin_All, Bit_SET);
-    //         GPIO_WriteBit(GPIOG, GPIO_Pin_All, Bit_SET);
     }
 }
