@@ -1,1 +1,6 @@
-{}
+{
+    "FEATURE_GPIO": {
+        "SOURCES": ["projectSpecific/blinky/HW/HW_GPIO_projectSpecific.c"],
+        "DEPENDENCIES": ["FEATURE_RCC"]
+    }
+}

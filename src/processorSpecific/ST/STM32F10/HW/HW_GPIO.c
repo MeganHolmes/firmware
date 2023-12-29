@@ -1,33 +1,33 @@
 
-// // C Standard Includes
+// C Standard Includes
 
-// // ST Includes
-// #include "stm32f10x_gpio.h"
+// ST Includes
+#include "stm32f10x_gpio.h"
 
-// // Project Includes
-// #include "HW_GPIO_generated.h"
-// #include "HW_GPIO.h"
+// Project Includes
+#include "HW_GPIO.h"
 
-// // Defines
-// typedef struct
-// {
-//     HW_GPIO_Data pin[HW_GPIO_COUNT];
-// } HW_GPIO_privateData;
+// Defines
+extern HW_GPIO_Data hw_gpio_config[HW_GPIO_COUNT];
 
-// static HW_GPIO_privateData gpioData;
+// Function Definitions
 
+void HW_GPIO_Init(void)
+{
+    for (uint8_t pinIdx = 0; pinIdx < HW_GPIO_COUNT; pinIdx++)
+    {
+        // Below pointer cast is to silence warning about hw_gpio_config being a const.
+        GPIO_Init(hw_gpio_config[pinIdx].port, (GPIO_InitTypeDef*) &hw_gpio_config[pinIdx].pinData);
+        GPIO_WriteBit(hw_gpio_config[pinIdx].port, hw_gpio_config[pinIdx].pinData.GPIO_Pin, hw_gpio_config[pinIdx].defaultState);
+    }
+}
 
-// void HW_GPIO_Init(void)
-// {
-//     for (int pinIdx = 0; pinIdx < HW_GPIO_COUNT; pinIdx++)
-//     {
-//         // TODO: I am pretty sure there is a pointer error here.
-//         GPIO_Init(gpioData.pin[pinIdx].port, &gpioData.pin[pinIdx].pinData);
-//         GPIO_WriteBit(gpioData.pin[pinIdx].port, gpioData.pin[pinIdx].pinData.GPIO_Pin, gpioData.pin[pinIdx].defaultState);
-//     }
-// }
+void HW_GPIO_setEnableStatus(HW_GPIO_Pin pinID, bool enable)
+{
+    GPIO_WriteBit(hw_gpio_config[pinID].port, hw_gpio_config[pinID].pinData.GPIO_Pin, (BitAction) enable);
+}
 
-// void HW_GPIO_setEnableStatus(HW_GPIO_Pin pinID, bool enable)
-// {
-
-// }
+GPIO_TypeDef* HW_GPIO_getPortForGPIOID(HW_GPIO_Pin pinID)
+{
+    return hw_gpio_config[pinID].port;
+}

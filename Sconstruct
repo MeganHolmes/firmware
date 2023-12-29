@@ -19,6 +19,7 @@ project=GetOption('project')
 verbose=GetOption('verbose')
 
 VariantDir('build', 'src', duplicate=False)
+
 SConscript(f'build/SConscript', exports='env project verbose')
 
 # Running linter
