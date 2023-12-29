@@ -42,7 +42,7 @@ def checkForDuplicates(features, sources):
 
 
 def outputCDefsFile(features):
-    with open(projectDir + "/cDefs.h", "w") as cDefsFile:
+    with open("../build/" + projectDir + "/cDefs.h", "w") as cDefsFile:
         cDefsFile.write("// This file contains all the features enabled during the build as flags for use in C code.\n")
         cDefsFile.write("// See outputCDefs in src/Sconscript.\n")
         for feature in features:

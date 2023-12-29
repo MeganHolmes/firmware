@@ -5,6 +5,7 @@
 // Project Includes
 #include "HW_RCC.h"
 #include "HW_GPIO.h"
+#include "app_heartbeat.h"
 
 
 int main(void)
