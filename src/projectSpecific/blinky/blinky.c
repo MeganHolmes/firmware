@@ -5,8 +5,7 @@
 // Project Includes
 #include "HW_RCC.h"
 #include "HW_GPIO.h"
-// #include "app_led.h"
-// #include "app_led_heartbeat.h"
+
 
 int main(void)
 {

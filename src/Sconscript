@@ -23,15 +23,6 @@ def ensureGeneratedDirsExist(projectDir, verbose):
         if verbose:
             print("Created " + projectDir)
 
-    # if not os.path.isdir("../build/" + projectDir + "/generated"):
-    #     os.mkdir("../build/" + projectDir + "/generated")
-    #     if verbose:
-    #         print("Created " + projectDir + "/generated")
-
-    # if not os.path.isdir("../build/" + projectDir + "/generated/HW"):
-    #     os.mkdir("../build/" + projectDir + "/generated/HW")
-    #     if verbose:
-    #         print("Created " + projectDir + "/generated/HW")
 
 def checkForDuplicates(features, sources):
     for feature in features:
