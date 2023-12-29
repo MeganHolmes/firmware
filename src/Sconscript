@@ -1,19 +1,150 @@
 # firmware/src/sconscript
 
+from __future__ import absolute_import
 import json
+import os
+import sys
+from src.tools.buildTools import processFeature
 
-Import('env', 'project')
+def ensureGeneratedDirsExist(projectDir, verbose):
+    print("Generating directories")
+    if not os.path.isdir("../build"):
+        os.mkdir("../build")
+        if verbose:
+            print("Created build/")
 
+    if not os.path.isdir("../build/projectSpecific"):
+        os.mkdir("../build/projectSpecific")
+        if verbose:
+            print("Created build/projectSpecific/")
+
+    if not os.path.isdir("../build/" + projectDir):
+        os.mkdir("../build/" + projectDir)
+        if verbose:
+            print("Created " + projectDir)
+
+
+def checkForDuplicates(features, sources):
+    for feature in features:
+        if features.count(feature) > 1:
+            print(f"Duplicate feature {feature} found")
+            Exit(1)
+
+    for source in sources:
+        if sources.count(source) > 1:
+            print(f"Duplicate source {source} found")
+            Exit(1)
+
+    for path in env['CPPPATH']:
+        if env['CPPPATH'].count(path) > 1:
+            print(f"Duplicate include path {path} found")
+            Exit(1)
+
+
+def outputCDefsFile(features):
+    with open("../build/" + projectDir + "/cDefs.h", "w") as cDefsFile:
+        cDefsFile.write("// This file contains all the features enabled during the build as flags for use in C code.\n")
+        cDefsFile.write("// See outputCDefs in src/Sconscript.\n")
+        for feature in features:
+            cDefsFile.write("#define " + feature + " 1U\n")
+        cDefsFile.close()
+
+
+Import('env', 'project', 'verbose')
 
 buildOptions = json.loads(File('buildOptions.json').get_text_contents())
 
 if project not in buildOptions:
     print(f"Invalid project '{project}'. Available projects: {', '.join(buildOptions.keys())}")
     Exit(1)
+else:
+    print(f"Building project {project}")
 
-sources = buildOptions[project]['sourceList']
 outputName = buildOptions[project]['outputName']
+projectDir = buildOptions[project]['projectDir']
+mainFile = projectDir + "/" + buildOptions[project]['mainFile']
+
+processorDir = None
+if 'processorDir' in buildOptions[project]:
+    processorDir = buildOptions[project]['processorDir']
+
+ensureGeneratedDirsExist(projectDir, verbose)
+
+sources = []
+
+# Load the feature selections
+print("Loading features")
+featureSelections = json.loads(File(projectDir + '/featureSelections.json').get_text_contents())
+sharedFeatureList = json.loads(File('shared/featureList.json').get_text_contents())
+projectSpecificFeatureList = json.loads(File(projectDir + '/featureList.json').get_text_contents())
+
+featuresEnabled = []
+for feature in featureSelections:
+    if featureSelections[feature]['active'] is True:
+        featuresEnabled, sources = processFeature(feature, featuresEnabled, sources, sharedFeatureList, verbose)
+
+if verbose:
+    print("  Starting project specific feature scan")
+for feature in featuresEnabled:
+    if feature in projectSpecificFeatureList:
+        featuresEnabled, sources = processFeature(feature, featuresEnabled, sources, projectSpecificFeatureList, verbose)
+
+if processorDir is not None:
+    if verbose:
+        print("  Starting processor specific feature scan")
+    featuresEnabled, generatedSources = env.SConscript(processorDir + "/SConscript", exports='projectDir env featuresEnabled verbose')
+    sources.extend(generatedSources)
+
+# Add the main file
+sources.insert(0, mainFile)
+
+# TODO: https://github.com/MeganHolmes/firmware/issues/14 Make this less hard-coded
+env.Append(CPPPATH = [projectDir, 'shared/app', 'shared/IO', 'shared/HW', 'shared/RTOS', projectDir + '/app', projectDir + '/HW'])
+
+if verbose:
+    print("Checking for duplicate features, sources, and include paths.")
+checkForDuplicates(featuresEnabled, sources)
+
+if verbose:
+    print("Generating CDefs file.")
+outputCDefsFile(featuresEnabled)
+
+# TODO: https://github.com/MeganHolmes/firmware/issues/12 Create a list of all features that are enabled, and include how they were turned on. From manual featureSelections
+# or from being activated by higher-level features.
+# TODO: https://github.com/MeganHolmes/firmware/issues/12 Make a scanner to parse the featureSelections file and ensure that if a higher-level feature is enabled, all
+# of its dependencies are either not defined (and will be automatically defined) or are defined and active. If there
+# are any dependencies that are defined but not active, print a warning to the console and exit.
+# TODO: https://github.com/MeganHolmes/firmware/issues/14 Seperate this file into more functions.
+
+# Write all features, source files, and include paths to a log file
+with open("../build/" + projectDir + "/buildLog.txt", "w") as logFile:
+    if verbose:
+        print("Writing build log")
+
+    logFile.write("Features enabled:\n")
+    for feature in featuresEnabled:
+        logFile.write("  " + feature + "\n")
+    logFile.write("Sources found:\n")
+    for source in sources:
+        logFile.write("  " + source + "\n")
+    logFile.write("Include paths:\n")
+    for path in env['CPPPATH']:
+        logFile.write("  " + path + "\n")
+    logFile.close()
 
 
 # Build the selected target
+print("Starting build:")
+if verbose:
+    print("  Features enabled:")
+    for feature in featuresEnabled:
+        print("    " + feature)
+    print("  Sources found:")
+    for source in sources:
+        print("    " + source)
+    print("  Include paths:")
+    for path in env['CPPPATH']:
+        print("    " + path)
+    # print(env.Dump()) # Uncomment to check all environment variables
+
 env.Program(source=sources, target=outputName)

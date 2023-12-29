@@ -8,21 +8,25 @@ AddOption('--project', dest='project', type='string', nargs=1, action='store', h
 AddOption('--buildOnly', dest='buildOnly', action='store_true', help='Skips linter and unit tests')
 AddOption('--skipTests', dest='skipTests', action='store_true', help='Skips unit tests')
 AddOption('--skipLinter', dest='skipLinter', action='store_true', help='Skips linter')
+AddOption('--verbose', dest='verbose', action='store_true', help='Outputs Excessive Debugging Information')
 
 if not GetOption('project'):
     print('Please specify a project to build using --project')
     Exit(1)
 
-env = Environment()
+env = Environment(tools = ['mingw'], ENV = {'PATH' : os.environ['PATH']})
 project=GetOption('project')
+verbose=GetOption('verbose')
 
 VariantDir('build', 'src', duplicate=False)
-SConscript(f'build/SConscript', exports='env project')
+
+SConscript(f'build/SConscript', exports='env project verbose')
 
 # Running linter
 if not GetOption('buildOnly') and not GetOption('skipLinter'):
     if not os.path.isdir("linterData"):
         os.mkdir("linterData")
 
+    print("Running linter")
     cppcheck_command = 'cppcheck --project=linter.cppcheck --platform=native -j8 src/ '
     os.system(cppcheck_command)

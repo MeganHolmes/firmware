@@ -1,0 +1,81 @@
+# firmware/src/processorSpecific/ST/STM32F10/Sconscript
+
+from __future__ import absolute_import
+import json
+from src.tools.buildTools import processFeature
+
+# TODO: https://github.com/MeganHolmes/firmware/issues/14 Be smarter about the paths and the backtracking.
+# TODO: https://github.com/MeganHolmes/firmware/issues/13 Consider tracking pads to ensure the same pad isn't defined for two things. Could also be done in a dedicated json checker before this step
+
+
+def setupEnvForArm(env):
+    # Orignally From: https://elektronotes.wordpress.com/2015/02/05/using-scons-with-gnu-toolchain-for-arm-on-windows-part-3-the-scons-script/
+    # Comments after each line added by me.
+    # There is a a lot of options that are commented out. I am not using them now but I want to keep them in this file should I ever want to use them.
+    env['AR'] = 'arm-none-eabi-ar'
+    env['AS'] = 'arm-none-eabi-as'
+    env['CC'] = 'arm-none-eabi-gcc'
+    env['CXX'] = 'arm-none-eabi-g++'
+    env['LINK'] = 'arm-none-eabi-ld'
+    env['RANLIB'] = 'arm-none-eabi-ranlib'
+    env['OBJCOPY'] = 'arm-none-eabi-objcopy'
+    env['PROGSUFFIX'] = '.elf'
+
+    # Optimization Notes. Below are options that I might use.
+    # -O0 = Reduce compilation time and make debugging produce the expected results. Use for fast compiles.
+    # -03 = the compiler tries to reduce code size and execution time. Still maintains standards compliance unlike -Ofast. Use for production unless size is a concern.
+    # -Og = Optimize debugging experience. Use for use with debuggers.
+    # -Oz = Optimize for size. Similar to -Os but more aggressive. Use for size constrained environments.
+    # Full list: https://gcc.gnu.org/onlinedocs/gcc/Optimize-Options.html
+
+    # compiler flags
+    env.Append(CCFLAGS = [
+    '-mcpu=cortex-m3', # Specify the CPU to compile for.
+    '-mthumb', # Something to do with different instruction sets.
+    '-Og',
+    # '-fsigned-char', #  Let the type char be signed, like signed char. Don't know why I would need this right now.
+    # '-ffunction-sections', #  Place each function or data item into its own section in the output file if the target supports arbitrary sections. Tries to reduce file size but that's not an issue right now
+    # '-fdata-sections', # Same as above but for data.
+    '-std=gnu17', # Determine the language standard. Using newest GNU version until C23 is released. Mostly so I can use 0b binary literals.
+    # '-fmessage-length=0', # formats error messages to fit on lines of n characters. I don't care about this right now.
+    # '-mthumb-interwork', # Something to do with different instruction sets
+    '-march=armv7-m',
+    '--save-temps', # Save intermediate files for debugging.
+    '-fverbose-asm', # Add extra comments to the assembly code. Useful for debugging.
+    '-Wall', # Enable all warnings. Useful for debugging.
+    '-Wextra', # Enable extra warnings. Useful for debugging.
+    # '-Werror', # Treat warnings as errors. Useful for debugging. # TODO: Enable this after https://github.com/MeganHolmes/firmware/issues/15 is fixed
+    '-g3', # Produce debugging information. Useful for debugging.
+    # '-nostdlib',
+    # '-standalone',
+    # '-nostdinc',
+    ])
+
+    # linker flags
+    env.Append(LINKFLAGS = [
+    # '-ffunction-sections', # See above explanations
+    # '-fdata-sections',
+    '-Tsrc/processorSpecific/ST/STM32F10/manufacturer/stm32_flash.ld', # Specify the linker script.
+    # '-Xlinker', # Pass the following argument to the linker.
+    # '--gc-sections',
+    # '--specs=nosys.specs', # Fixes the _exit linking issue. Something to do with compiling for ARM on x86.
+    # '--specs=nano.specs',
+    '-g', # Perserve debugging information from the compile step so it can be used by a debugger.
+    ])
+
+
+Import('projectDir', 'env', 'featuresEnabled', 'verbose')
+
+setupEnvForArm(env)
+
+processorFeatureList = json.loads(File('featureList.json').get_text_contents())
+sources = []
+newFeatures = []
+for feature in featuresEnabled:
+    featuresEnabled, newSources = processFeature(feature, featuresEnabled, sources, processorFeatureList, verbose)
+
+
+env.Append(CPPPATH = ['processorSpecific/ST/STM32F10/manufacturer',
+                      'processorSpecific/ST/STM32F10/HW'])
+
+Return('featuresEnabled', 'sources')

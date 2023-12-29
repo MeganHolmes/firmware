@@ -1,0 +1,13 @@
+This project is the first time I have used gdb so most of these instructions are for gdb.
+
+In one terminal start the gdb server by using "st-util"
+In another terminal use the command "arm-none-eabi-gdb build\blinky.elf"
+type "target extended-remote :4242"
+type "load"
+Use "continue" to let the chip run
+Use ctrl+c to stop the chip
+
+Use "info register" to see the register information.
+use "info locals" to see local variables
+Use "p /x *[NAME]" where [NAME] is a macro in src\processorSpecific\ST\STM32F10\manufacturer\stm32f10x.h
+Use "bt" to get a backtrace.

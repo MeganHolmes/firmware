@@ -1,0 +1,14 @@
+{
+    "FEATURE_STM32F10": {
+        "active": true
+    },
+    "FEATURE_GPIO": {
+        "active": true
+    },
+    "FEATURE_HEARTBEAT": {
+        "active": true
+    },
+    "FEATURE_LED_HEARTBEAT": {
+        "active": true
+    }
+}

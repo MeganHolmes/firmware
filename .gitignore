@@ -63,3 +63,6 @@ __pycache__/
 
 # Linter
 linterData/
+
+# Generated Files
+generated/

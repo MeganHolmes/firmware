@@ -1,0 +1,10 @@
+{
+    "FEATURE_GPIO": {
+        "SOURCES": ["projectSpecific/blinky/HW/HW_GPIO_projectSpecific.c"],
+        "DEPENDENCIES": ["FEATURE_RCC"]
+    },
+    "FEATURE_HEARTBEAT": {
+        "SOURCES": ["projectSpecific/blinky/app/app_heartbeat_projectSpecific.c"],
+        "DEPENDENCIES": ["FEATURE_GPIO"]
+    }
+}

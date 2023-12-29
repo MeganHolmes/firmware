@@ -1,0 +1,18 @@
+{
+    "FEATURE_HEARTBEAT": {
+        "SOURCES": ["shared/app/app_heartbeat.c"],
+        "DEPENDENCIES": []
+    },
+    "FEATURE_LED_HEARTBEAT": {
+        "SOURCES": [],
+        "DEPENDENCIES": ["FEATURE_HEARTBEAT",
+                         "FEATURE_GPIO"]
+    },
+    "FEATURE_RTOS": {
+        "SOURCES": ["RTOS/heap_1,c",
+                    "RTOS/list.c",
+                    "RTOS/queue.c",
+                    "RTOS/tasks.c"],
+        "DEPENDENCIES": []
+    }
+}
