@@ -5,7 +5,10 @@
     "FEATURE_GPIO": {
         "active": true
     },
+    "FEATURE_HEARTBEAT": {
+        "active": true
+    },
     "FEATURE_LED_HEARTBEAT": {
-        "active": false
+        "active": true
     }
 }

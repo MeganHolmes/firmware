@@ -31,3 +31,9 @@ GPIO_TypeDef* HW_GPIO_getPortForGPIOID(HW_GPIO_Pin pinID)
 {
     return hw_gpio_config[pinID].port;
 }
+
+void HW_GPIO_togglePin(HW_GPIO_Pin pinID)
+{
+    uint8_t bitstatus = GPIO_ReadOutputDataBit(hw_gpio_config[pinID].port, hw_gpio_config[pinID].pinData.GPIO_Pin);
+    HW_GPIO_setEnableStatus(pinID, !bitstatus);
+}

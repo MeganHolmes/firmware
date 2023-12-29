@@ -15,30 +15,15 @@ int main(void)
     error_present |= HW_RCC_Init();
     HW_GPIO_Init();
 
-    volatile uint64_t counter = 0;
-    volatile bool pin_is_on = false;
-
-    // RCC->APB2ENR |= RCC_APB2ENR_IOPAEN;
-    // GPIOA->CRL = 0x22222222; // All GPIOs are output push-pull at 2MHz
-    // GPIOA->CRH = 0x22222222; // All GPIOs are output push-pull at 2MHz
+    uint64_t counter = 0;
 
     while (true)
     {
         counter++;
 
-        if (counter >= 1000000)
+        if (counter >= 1000000) // This isn't 1 second but for this demo it doesn't matter
         {
-            if (pin_is_on)
-            {
-                // GPIOA->BSRR = 0xFFFF; // RESET
-                pin_is_on = false;
-            }
-            else
-            {
-                // GPIOA->BRR = 0xFFFF; // Set
-                pin_is_on = true;
-            }
-            HW_GPIO_setEnableStatus(HW_GPIO_NUCLEO_LED, pin_is_on);
+            app_heartbeat_run();
             counter = 0;
         }
     }

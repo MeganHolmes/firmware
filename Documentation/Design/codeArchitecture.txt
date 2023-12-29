@@ -3,9 +3,7 @@ shared code contains all application layer logic and some IO logic.
 projectSpecific code is mostly configs and a small amount of very high-level code like main functions and the like.
 processorSpecific code contains all HW layer code and itself is divided into 3 sections as well: HW, manufacturer, and generated.
     Manufacturer code is low-level drivers provided by the manufacturer that accesses registers directly.
-    HW code is custom code written for this repo, for the most part it's an abstraction layer for manufacturer code but it may also have some low-level logic.
-    Generated code is the low-level equivalent for projectSpecific code. It mostly performs pin configs.
+    HW code is custom code written for this repo, for the most part it's an abstraction layer for manufacturer code but it may also have some low-level logic for specific cases.
 
 The point for most code to be in shared is so that any project can use it easily by enabling it in featureSelections and adding projectSpecific configs.
-The point for the generated code is so that a individual project could change processors just by changing a feature and changing pinConfig.json.
 The point for the custom HW abstraction layer is so that when higher level code accesses HW it's not tied to a specific processor.

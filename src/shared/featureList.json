@@ -1,11 +1,12 @@
 {
-    "FEATURE_LED": {
-        "SOURCES": ["shared/app/app_led.c"],
-        "DEPENDENCIES": ["FEATURE_GPIO"]
+    "FEATURE_HEARTBEAT": {
+        "SOURCES": ["shared/app/app_heartbeat.c"],
+        "DEPENDENCIES": []
     },
     "FEATURE_LED_HEARTBEAT": {
-        "SOURCES": ["shared/app/app_led_heartbeat.c"],
-        "DEPENDENCIES": ["FEATURE_LED"]
+        "SOURCES": [],
+        "DEPENDENCIES": ["FEATURE_HEARTBEAT",
+                         "FEATURE_GPIO"]
     },
     "FEATURE_RTOS": {
         "SOURCES": ["RTOS/heap_1,c",
