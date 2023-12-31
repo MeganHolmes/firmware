@@ -9,5 +9,11 @@
         "projectDir": "projectSpecific/blinky",
         "processorDir": "processorSpecific/ST/STM32F10",
         "mainFile": "blinky.c"
+    },
+    "blinkyRTOS": {
+        "outputName": "blinkyRTOS.elf",
+        "projectDir": "projectSpecific/blinkyRTOS",
+        "processorDir": "processorSpecific/ST/STM32F10",
+        "mainFile": "../../shared/RTOS/RTOS_start.c"
     }
 }
