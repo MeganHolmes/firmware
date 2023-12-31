@@ -6,7 +6,7 @@
 #include "stm32f10x_rcc.h"
 
 // Project Includes
-#include "cDefs.h"
+#include "featureDefines.h"
 #include "HW_RCC.h"
 #include "HW_GPIO_projectSpecific.h"
 #include "HW_GPIO.h"
