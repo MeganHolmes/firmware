@@ -72,7 +72,7 @@
 // #define configMAX_API_CALL_INTERRUPT_PRIORITY   [dependent on processor and application]
 
 /* Define to trap errors during development. */
-#define configASSERT( ( x ) ) if( ( x ) == 0 ) vAssertCalled( __FILE__, __LINE__ )
+#define configASSERT(  x  ) if( ( x ) == 0 ) vAssertCalled( __FILE__, __LINE__ )
 
 /* FreeRTOS MPU specific definitions. */
 #define configINCLUDE_APPLICATION_DEFINED_PRIVILEGED_FUNCTIONS 0 // Default. Don't need an MPU probably ever
@@ -110,5 +110,10 @@
 #define INCLUDE_xTaskResumeFromISR              1
 
 /* A header file that defines trace macro can be included here. */
+
+/* Redirect FreeRTOS port interrupts. */
+#define vPortSVCHandler     SVC_handler
+#define xPortPendSVHandler  pending_SV_handler
+#define xPortSysTickHandler SysTick_handler
 
 #endif /* FREERTOS_CONFIG_H */

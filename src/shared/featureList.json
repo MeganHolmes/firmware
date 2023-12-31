@@ -9,10 +9,11 @@
                          "FEATURE_GPIO"]
     },
     "FEATURE_RTOS": {
-        "SOURCES": ["RTOS/heap_1,c",
-                    "RTOS/list.c",
-                    "RTOS/queue.c",
-                    "RTOS/tasks.c"],
+        "SOURCES": ["shared/RTOS/heap_1.c",
+                    "shared/RTOS/list.c",
+                    "shared/RTOS/queue.c",
+                    "shared/RTOS/tasks.c",
+                    "shared/RTOS/RTOS_task.c"],
         "DEPENDENCIES": []
     }
 }

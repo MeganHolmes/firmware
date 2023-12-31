@@ -76,6 +76,7 @@ for feature in featuresEnabled:
 
 
 env.Append(CPPPATH = ['processorSpecific/ST/STM32F10/manufacturer',
-                      'processorSpecific/ST/STM32F10/HW'])
+                      'processorSpecific/ST/STM32F10/HW',
+                      'processorSpecific/ST/STM32F10/RTOS'])
 
 Return('featuresEnabled', 'sources')
