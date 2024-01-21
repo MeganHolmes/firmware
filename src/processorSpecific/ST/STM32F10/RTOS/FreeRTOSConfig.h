@@ -75,7 +75,7 @@
 #define configASSERT(  x  ) if( ( x ) == 0 ) vAssertCalled( __FILE__, __LINE__ )
 
 /* FreeRTOS MPU specific definitions. */
-#define configINCLUDE_APPLICATION_DEFINED_PRIVILEGED_FUNCTIONS 0 // Default. Don't need an MPU probably ever
+#define configINCLUDE_APPLICATION_DEFINED_PRIVILEGED_FUNCTIONS 0 // Default.
 #define configTOTAL_MPU_REGIONS                                8 /* Default value. */
 #define configTEX_S_C_B_FLASH                                  0x07UL /* Default value. */
 #define configTEX_S_C_B_SRAM                                   0x07UL /* Default value. */
@@ -113,7 +113,7 @@
 
 /* Redirect FreeRTOS port interrupts. */
 #define vPortSVCHandler     SVC_handler
-#define xPortPendSVHandler  pending_SV_handler
+#define xPortPendSVHandler  PendSV_Handler
 #define xPortSysTickHandler SysTick_handler
 
 #endif /* FREERTOS_CONFIG_H */

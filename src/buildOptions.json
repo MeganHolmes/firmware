@@ -17,7 +17,7 @@
         "mainFile": "../../shared/IO/IO_taskExecutor.c"
     },
     "blinkyRTOS": {
-        "outputName": "blinkyRTOS.elf",
+        "outputName": "blinkyRTOS",
         "projectDir": "projectSpecific/blinkyRTOS",
         "processorDir": "processorSpecific/ST/STM32F10",
         "mainFile": "../../shared/RTOS/RTOS_start.c"

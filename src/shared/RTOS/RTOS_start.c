@@ -1,7 +1,7 @@
 // C Includes
 #include <stdbool.h>
 #include <stdint.h>
-#include <stdlib.h>
+// #include <stdlib.h>
 
 // RTOS Includes
 #include "FreeRTOS.h"
@@ -24,14 +24,29 @@ int main(void)
 {
     RTOS_task_init();
 
-    xTaskCreate(RTOS_task_1ms, "RTOS_task_1ms", STACK_DEPTH, (void*)&RTOS_task_1ms_frequency,
-                configMAX_PRIORITIES-1, NULL);
-    xTaskCreate(RTOS_task_10ms, "RTOS_task_10ms", STACK_DEPTH, (void*)&RTOS_task_10ms_frequency,
-                configMAX_PRIORITIES-2, NULL);
-    xTaskCreate(RTOS_task_100ms, "RTOS_task_100ms", STACK_DEPTH, (void*)&RTOS_task_100ms_frequency,
-                configMAX_PRIORITIES-3, NULL);
+    // xTaskCreate(RTOS_task_1ms, "RTOS_task_1ms", STACK_DEPTH, (void*)&RTOS_task_1ms_frequency,
+    //             configMAX_PRIORITIES-1, NULL);
+    // xTaskCreate(RTOS_task_10ms, "RTOS_task_10ms", STACK_DEPTH, (void*)&RTOS_task_10ms_frequency,
+    //             configMAX_PRIORITIES-2, NULL);
+    // xTaskCreate(RTOS_task_100ms, "RTOS_task_100ms", STACK_DEPTH, (void*)&RTOS_task_100ms_frequency,
+    //             configMAX_PRIORITIES-3, NULL);
     xTaskCreate(RTOS_task_1000ms, "RTOS_task_1000ms", STACK_DEPTH, (void*)&RTOS_task_1000ms_frequency,
                 configMAX_PRIORITIES-4, NULL);
+
+    // BaseType_t xTaskCreate( TaskFunction_t pxTaskCode,
+    //                         const char * const pcName, /*lint !e971 Unqualified char types are allowed for strings and single characters only. */
+    //                         const configSTACK_DEPTH_TYPE usStackDepth,
+    //                         void * const pvParameters,
+    //                         UBaseType_t uxPriority,
+    //                         TaskHandle_t * const pxCreatedTask ) PRIVILEGED_FUNCTION;
+
+                    // TaskHandle_t xTaskCreateStatic( TaskFunction_t pxTaskCode,
+                    //                 const char * const pcName, /*lint !e971 Unqualified char types are allowed for strings and single characters only. */
+                    //                 const uint32_t ulStackDepth,
+                    //                 void * const pvParameters,
+                    //                 UBaseType_t uxPriority,
+                    //                 StackType_t * const puxStackBuffer,
+                    //                 StaticTask_t * const pxTaskBuffer ) PRIVILEGED_FUNCTION;
 
     // Start the scheduler.
     vTaskStartScheduler();
