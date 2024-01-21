@@ -38,7 +38,7 @@ def setupEnvForArm(env):
     # '-fdata-sections', # Same as above but for data.
     '-std=gnu17', # Determine the language standard. Using newest GNU version until C23 is released. Mostly so I can use 0b binary literals.
     # '-fmessage-length=0', # formats error messages to fit on lines of n characters. I don't care about this right now.
-    # '-mthumb-interwork', # Something to do with different instruction sets
+    '-mthumb-interwork', # Something to do with different instruction sets
     '-march=armv7-m',
     '--save-temps', # Save intermediate files for debugging.
     '-fverbose-asm', # Add extra comments to the assembly code. Useful for debugging.

@@ -154,4 +154,7 @@ if verbose:
         print("    " + path)
     # print(env.Dump()) # Uncomment to check all environment variables
 
+# Output a memory map file
+env.Append(LINKFLAGS = ['-Wl,-Map={},--cref'.format("build/" + outputName + ".memmap")])
+
 env.Program(source=sources, target=outputName)

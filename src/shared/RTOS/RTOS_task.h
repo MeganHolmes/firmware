@@ -1,8 +1,3 @@
-
-
-
-
-
 // Function declarations
 void RTOS_task_init(void);
 void RTOS_task_1ms(void *args);

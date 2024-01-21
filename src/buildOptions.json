@@ -1,17 +1,17 @@
 {
     "helloWorld": {
-        "outputName": "helloWorld.exe",
+        "outputName": "helloWorld",
         "projectDir": "projectSpecific/helloWorld",
         "mainFile": "helloWorld.c"
     },
     "blinky": {
-        "outputName": "blinky.elf",
+        "outputName": "blinky",
         "projectDir": "projectSpecific/blinky",
         "processorDir": "processorSpecific/ST/STM32F10",
         "mainFile": "blinky.c"
     },
     "blinkyRTOS": {
-        "outputName": "blinkyRTOS.elf",
+        "outputName": "blinkyRTOS",
         "projectDir": "projectSpecific/blinkyRTOS",
         "processorDir": "processorSpecific/ST/STM32F10",
         "mainFile": "../../shared/RTOS/RTOS_start.c"
