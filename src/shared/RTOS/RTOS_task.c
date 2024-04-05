@@ -1,5 +1,6 @@
 // C includes
 #include <stdbool.h>
+#include <stdlib.h>
 
 // Project includes
 #include "universal_include.h"
@@ -8,72 +9,28 @@
 #include "HW_RCC.h"
 #include "app_heartbeat.h"
 
-// Private function declarations
+// Defines
 
+// Function declarations
 bool RTOS_task_HW_init(void);
 void RTOS_task_IO_init(void);
 void RTOS_task_app_init(void);
-
-void RTOS_task_HW_1ms(void);
-void RTOS_task_IO_1ms(void);
-void RTOS_task_app_1ms(void);
-
-void RTOS_task_HW_10ms(void);
-void RTOS_task_IO_10ms(void);
-void RTOS_task_app_10ms(void);
-
-void RTOS_task_HW_100ms(void);
-void RTOS_task_IO_100ms(void);
-void RTOS_task_app_100ms(void);
-
-void RTOS_task_HW_1000ms(void);
-void RTOS_task_IO_1000ms(void);
-void RTOS_task_app_1000ms(void);
 
 // Function definitions
 
 void RTOS_task_init(void)
 {
+    // Important note: This function runs before the RTOS starts.
     RTOS_task_HW_init();
     RTOS_task_IO_init();
     RTOS_task_app_init();
 }
 
-void RTOS_task_1ms(void *args)
-{
-    UNUSED(args);
-    RTOS_task_HW_1ms();
-    RTOS_task_IO_1ms();
-    RTOS_task_app_1ms();
-}
-
-void RTOS_task_10ms(void *args)
-{
-    UNUSED(args);
-    RTOS_task_HW_10ms();
-    RTOS_task_IO_10ms();
-    RTOS_task_app_10ms();
-}
-
-void RTOS_task_100ms(void *args)
-{
-    UNUSED(args);
-    RTOS_task_HW_100ms();
-    RTOS_task_IO_100ms();
-    RTOS_task_app_100ms();
-}
-
-void RTOS_task_1000ms(void *args)
-{
-    UNUSED(args);
-    RTOS_task_HW_1000ms();
-    RTOS_task_IO_1000ms();
-    RTOS_task_app_1000ms();
-}
-
 bool RTOS_task_HW_init(void)
 {
     bool error_present = false;
+
+    // NVIC_PriorityGroupConfig( NVIC_PriorityGroup_4 );
 
 #if FEATURE_RCC
     error_present |= HW_RCC_Init();
