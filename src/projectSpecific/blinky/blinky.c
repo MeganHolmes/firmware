@@ -12,8 +12,8 @@ int main(void)
 {
     bool error_present = false;
 
-    error_present |= HW_RCC_Init();
-    HW_GPIO_Init();
+    error_present |= HW_RCC_init();
+    HW_GPIO_init();
 
     uint64_t counter = 0;
 

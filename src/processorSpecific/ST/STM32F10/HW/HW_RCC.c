@@ -6,7 +6,7 @@
 #include "stm32f10x_rcc.h"
 
 // Project Includes
-#include "cDefs.h"
+#include "featureDefines.h"
 #include "HW_RCC.h"
 #include "HW_GPIO_projectSpecific.h"
 #include "HW_GPIO.h"
@@ -15,12 +15,13 @@
 // Defines
 
 // Private Function Declarations
-bool HW_RCC_enablePeripherals(void);
-bool HW_RCC_enableGPIOs(void);
+static bool HW_RCC_enablePeripherals(void);
+static bool HW_RCC_enableGPIOs(void);
+static void HW_RCC_enableRTC(void);
 
 // Function Definitions
 
-bool HW_RCC_Init(void)
+bool HW_RCC_init(void)
 {
     bool error_detected = false;
 
@@ -29,10 +30,20 @@ bool HW_RCC_Init(void)
     return error_detected;
 }
 
+uint32_t HW_RCC_get_sysclk_hz(void)
+{
+    RCC_ClocksTypeDef clocks;
+    RCC_GetClocksFreq(&clocks);
+    return clocks.SYSCLK_Frequency;
+}
 
-bool HW_RCC_enablePeripherals(void)
+static bool HW_RCC_enablePeripherals(void)
 {
     bool error_detected = false;
+
+#if FEATURE_TIMER
+    HW_RCC_enableRTC();
+#endif // FEATURE_TIMER
 
 #if FEATURE_GPIO
     error_detected |= HW_RCC_enableGPIOs();
@@ -42,7 +53,7 @@ bool HW_RCC_enablePeripherals(void)
 }
 
 #if FEATURE_GPIO
-bool HW_RCC_enableGPIOs(void)
+static bool HW_RCC_enableGPIOs(void)
 {
     bool error_detected = false;
 
@@ -62,3 +73,16 @@ bool HW_RCC_enableGPIOs(void)
     return error_detected;
 }
 #endif // FEATURE_GPIO
+
+#if FEATURE_TIMER
+static void HW_RCC_enableRTC(void)
+{
+    RCC_APB1PeriphClockCmd(RCC_APB1Periph_PWR, ENABLE);
+    RCC_APB1PeriphClockCmd(RCC_APB1Periph_BKP, ENABLE);
+    PWR_BackupAccessCmd(ENABLE);
+    RCC_LSICmd(ENABLE);
+    RCC_RTCCLKConfig(RCC_RTCCLKSource_LSI);
+    RCC_RTCCLKCmd(ENABLE);
+    PWR_BackupAccessCmd(DISABLE);
+}
+#endif // FEATURE_TIMER
