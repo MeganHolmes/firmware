@@ -45,8 +45,11 @@ def generateFeatureDefinesFile(features):
     with open("../build/" + projectDir + "/featureDefines.h", "w") as featureDefinesFile:
         featureDefinesFile.write("// This file contains all the features enabled during the build as flags for use in C code.\n")
         featureDefinesFile.write("// See generateFeatureDefinesFile in src/Sconscript.\n")
+        featureDefinesFile.write("#ifndef __FEATURE_DEFINES_H__\n")
+        featureDefinesFile.write("#define __FEATURE_DEFINES_H__\n\n")
         for feature in features:
             featureDefinesFile.write("#define " + feature + " 1U\n")
+        featureDefinesFile.write("#endif // __FEATURE_DEFINES_H__\n")
         featureDefinesFile.close()
 
 

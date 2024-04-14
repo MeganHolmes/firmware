@@ -22,9 +22,8 @@
     },
     "FEATURE_TIMER": {
         "SOURCES": ["processorSpecific/ST/STM32F10/HW/HW_timer.c",
-                    "processorSpecific/ST/STM32F10/manufacturer/stm32f10x_rtc.c"],
-        "DEPENDENCIES": ["FEATURE_RCC",
-                         "FEATURE_POWER_CONTROL"]
+                    "processorSpecific/ST/STM32F10/manufacturer/stm32f10x_tim.c"],
+        "DEPENDENCIES": ["FEATURE_RCC"]
     },
     "FEATURE_POWER_CONTROL": {
         "SOURCES":["processorSpecific/ST/STM32F10/manufacturer/stm32f10x_pwr.c"],

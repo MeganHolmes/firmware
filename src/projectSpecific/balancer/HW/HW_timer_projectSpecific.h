@@ -1,0 +1,11 @@
+#ifndef __HW_TIMER_PROJECT_SPECIFIC_H__
+#define __HW_TIMER_PROJECT_SPECIFIC_H__
+
+
+typedef enum
+{
+    HW_TIMER_SYSTEM_CLK,
+    HW_TIMER_COUNT
+} HW_TIMER_IDX;
+
+#endif // __HW_TIMER_PROJECT_SPECIFIC_H__

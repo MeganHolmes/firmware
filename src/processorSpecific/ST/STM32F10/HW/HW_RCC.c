@@ -17,7 +17,10 @@
 // Private Function Declarations
 static bool HW_RCC_enablePeripherals(void);
 static bool HW_RCC_enableGPIOs(void);
+
+#if FEATURE_RTC
 static void HW_RCC_enableRTC(void);
+#endif // FEATURE_RTC
 
 // Function Definitions
 
@@ -37,13 +40,20 @@ uint32_t HW_RCC_get_sysclk_hz(void)
     return clocks.SYSCLK_Frequency;
 }
 
+uint32_t HW_RCC_get_pclk1_hz(void)
+{
+    RCC_ClocksTypeDef clocks;
+    RCC_GetClocksFreq(&clocks);
+    return clocks.PCLK1_Frequency;
+}
+
 static bool HW_RCC_enablePeripherals(void)
 {
     bool error_detected = false;
 
-#if FEATURE_TIMER
+#if FEATURE_RTC
     HW_RCC_enableRTC();
-#endif // FEATURE_TIMER
+#endif // FEATURE_RTC
 
 #if FEATURE_GPIO
     error_detected |= HW_RCC_enableGPIOs();
@@ -74,7 +84,7 @@ static bool HW_RCC_enableGPIOs(void)
 }
 #endif // FEATURE_GPIO
 
-#if FEATURE_TIMER
+#if FEATURE_RTC
 static void HW_RCC_enableRTC(void)
 {
     RCC_APB1PeriphClockCmd(RCC_APB1Periph_PWR, ENABLE);
@@ -85,4 +95,4 @@ static void HW_RCC_enableRTC(void)
     RCC_RTCCLKCmd(ENABLE);
     PWR_BackupAccessCmd(DISABLE);
 }
-#endif // FEATURE_TIMER
+#endif // FEATURE_RTC
