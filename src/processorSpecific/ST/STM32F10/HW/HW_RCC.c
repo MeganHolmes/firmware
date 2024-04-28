@@ -28,6 +28,21 @@ bool HW_RCC_init(void)
 {
     bool error_detected = false;
 
+    RCC->CR |= RCC_CR_HSION;
+
+    while (!(RCC->CR & RCC_CR_HSIRDY))
+            ; // wait for the HSIREADY flag
+
+    RCC->CR |= RCC_CR_PLLON;
+
+    while (!(RCC->CR & RCC_CR_PLLRDY))
+        ; // wait for the PLLRDY flag
+
+    RCC->CFGR 	|= RCC_CFGR_SW_PLL;
+
+    while (!(RCC->CFGR & RCC_CFGR_SWS_PLL))
+        ; // wait for PLL to be CLK
+
     error_detected |= HW_RCC_enablePeripherals();
 
     return error_detected;

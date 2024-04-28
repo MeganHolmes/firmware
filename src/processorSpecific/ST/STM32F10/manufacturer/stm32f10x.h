@@ -64,8 +64,8 @@
 #if !defined (STM32F10X_LD) && !defined (STM32F10X_LD_VL) && !defined (STM32F10X_MD) && !defined (STM32F10X_MD_VL) && !defined (STM32F10X_HD) && !defined (STM32F10X_HD_VL) && !defined (STM32F10X_XL) && !defined (STM32F10X_CL)
   // #define STM32F10X_LD      /*!< STM32F10X_LD: STM32 Low density devices */
   /* #define STM32F10X_LD_VL */  /*!< STM32F10X_LD_VL: STM32 Low density Value Line devices */
-  /* #define STM32F10X_MD */     /*!< STM32F10X_MD: STM32 Medium density devices */
-  #define STM32F10X_MD_VL   /*!< STM32F10X_MD_VL: STM32 Medium density Value Line devices */
+  #define STM32F10X_MD     /*!< STM32F10X_MD: STM32 Medium density devices */
+  // #define STM32F10X_MD_VL   /*!< STM32F10X_MD_VL: STM32 Medium density Value Line devices */
   /* #define STM32F10X_HD */     /*!< STM32F10X_HD: STM32 High density devices */
   /* #define STM32F10X_HD_VL */  /*!< STM32F10X_HD_VL: STM32 High density value line devices */
   /* #define STM32F10X_XL */     /*!< STM32F10X_XL: STM32 XL-density devices */
@@ -1454,6 +1454,13 @@ typedef struct
 #define FSMC_Bank3          ((FSMC_Bank3_TypeDef *) FSMC_Bank3_R_BASE)
 #define FSMC_Bank4          ((FSMC_Bank4_TypeDef *) FSMC_Bank4_R_BASE)
 #define DBGMCU              ((DBGMCU_TypeDef *) DBGMCU_BASE)
+
+// Custom code MH
+// Undefine everything that this chip doesn't have to prevent accidental usage.
+// Everything in this list are things I learned the hard way.
+#ifdef STM32F10X_MD
+#undef TIM6
+#endif
 
 /**
   * @}

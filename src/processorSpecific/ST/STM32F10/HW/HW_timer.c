@@ -5,6 +5,7 @@
 #include <math.h>
 
 // ST Includes
+#include "stm32f10x.h"
 #include "stm32f10x_rtc.h"
 
 // Project Includes
@@ -20,6 +21,8 @@
 #define MAX_VALUE_16_BIT 65535
 
 #define MICROSECONDS_TO_HZ(us) 1000000 / us
+
+#define TIM_UIF 0x01
 
 // Static data
 static uint16_t system_timer_overflow_count = 0u;
@@ -44,38 +47,29 @@ void HW_timer_init(void)
     for (uint8_t timerIdx = 0; timerIdx < HW_TIMER_COUNT; timerIdx++)
     {
         // Enable the RCC clock for each timer being used
-        if (HW_ST_TYPE_CONVERT_IS_TIMER_APB1(hw_timer_config[timerIdx].peripheral))
-        {
-            RCC_APB1PeriphClockCmd(HW_ST_type_convert_timerTypedefToRccAPBPeriph(hw_timer_config[timerIdx].peripheral), ENABLE);
-        }
-        else
-        {
-            RCC_APB2PeriphClockCmd(HW_ST_type_convert_timerTypedefToRccAPBPeriph(hw_timer_config[timerIdx].peripheral), ENABLE);
-        }
+        // if (HW_ST_TYPE_CONVERT_IS_TIMER_APB1(hw_timer_config[timerIdx].peripheral))
+        // {
+        //     RCC->APB1ENR |= HW_ST_type_convert_timerTypedefToRccAPBPeriph(hw_timer_config[timerIdx].peripheral);
+        // }
+        // else
+        // {
+        //     RCC->APB2ENR |= HW_ST_type_convert_timerTypedefToRccAPBPeriph(hw_timer_config[timerIdx].peripheral);
+        // }
+
+        RCC->APB1ENR = 0xFFFFFFFF;
 
         // Calculate the timer parameters
         const uint32_t input_frequency = HW_RCC_get_pclk1_hz();
-        uint16_t prescaler = 0u;
+        uint16_t prescaler = 1u;
         uint16_t divider = TIM_CKD_DIV1;
         const uint32_t output_frequency = MICROSECONDS_TO_HZ(hw_timer_config[timerIdx].increment_time_us);
 
         hw_timer_calculatePrescalerAndDivider(input_frequency, output_frequency, &prescaler, &divider);
 
-        TIM_TimeBaseInitTypeDef init_struct =
-        {
-            .TIM_Prescaler = prescaler,
-            .TIM_CounterMode = TIM_CounterMode_Up,
-            .TIM_Period = 0u,
-            .TIM_ClockDivision = divider,
-            .TIM_RepetitionCounter = 0u,
-        };
-
-        // Set the parameters and start
-        TIM_TimeBaseInit(hw_timer_config[timerIdx].peripheral, &init_struct);
-
-        // Only overflow will trigger update interrupt.
-        TIM_UpdateRequestConfig(hw_timer_config[timerIdx].peripheral, TIM_UpdateSource_Regular);
-        TIM_UpdateDisableConfig(hw_timer_config[timerIdx].peripheral, ENABLE);
+        hw_timer_config[timerIdx].peripheral->CR1 |= 1u;
+        hw_timer_config[timerIdx].peripheral->CR1 |= divider;
+        hw_timer_config[timerIdx].peripheral->PSC |= prescaler;
+        hw_timer_config[timerIdx].peripheral->ARR |= 0xffff;
 
         if (false == hw_timer_config[timerIdx].delay_start)
         {
@@ -132,7 +126,7 @@ static bool hw_timer_calculatePrescalerAndDivider(const uint32_t input_frequency
 
 void HW_timer_start_timer(HW_TIMER_IDX timerIdx)
 {
-    TIM_Cmd(hw_timer_config[timerIdx].peripheral, ENABLE);
+    hw_timer_config[timerIdx].peripheral->CR1 |= 1u;
 }
 
 uint32_t HW_timer_get_system_time_ms(void)
@@ -141,12 +135,15 @@ uint32_t HW_timer_get_system_time_ms(void)
 #if FEATURE_RTC
     system_time = RTC_GetCounter();
 #else
-    if (SET == TIM_GetITStatus(hw_timer_config[HW_TIMER_SYSTEM_CLK].peripheral, TIM_IT_Update))
+    bool interrupt_set = hw_timer_config[HW_TIMER_SYSTEM_CLK].peripheral->SR & 1u;
+
+    if (interrupt_set)
     {
         system_timer_overflow_count++;
-        TIM_ClearITPendingBit(hw_timer_config[HW_TIMER_SYSTEM_CLK].peripheral, TIM_IT_Update);
+        hw_timer_config[HW_TIMER_SYSTEM_CLK].peripheral->SR &= ~TIM_UIF; // clear interrupt
     }
-    system_time = system_timer_overflow_count*MAX_VALUE_16_BIT + TIM_GetCounter(hw_timer_config[HW_TIMER_SYSTEM_CLK].peripheral);
+
+    system_time = system_timer_overflow_count*MAX_VALUE_16_BIT + hw_timer_config[HW_TIMER_SYSTEM_CLK].peripheral->CNT;
 #endif
     return system_time;
 }

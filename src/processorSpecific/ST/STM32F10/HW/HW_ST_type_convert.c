@@ -84,10 +84,6 @@ uint32_t HW_ST_type_convert_timerTypedefToRccAPBPeriph(TIM_TypeDef* timer)
     {
         converted_ret = RCC_APB1Periph_TIM5;
     }
-    else if (timer == TIM6)
-    {
-        converted_ret = RCC_APB1Periph_TIM6;
-    }
     else if (timer == TIM7)
     {
         converted_ret = RCC_APB1Periph_TIM7;
