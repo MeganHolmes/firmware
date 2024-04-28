@@ -5,13 +5,9 @@
 #include <stdint.h>
 
 // Defines
-#define HW_ST_TYPE_CONVERT_IS_TIMER_APB1(PERIPH) (((PERIPH) == TIM1) || \
-                                                  ((PERIPH) == TIM8) || \
-                                                  ((PERIPH) == TIM9) || \
-                                                  ((PERIPH) == TIM10)|| \
-                                                  ((PERIPH) == TIM15)|| \
-                                                  ((PERIPH) == TIM16)|| \
-                                                  ((PERIPH) == TIM17))
+#define HW_ST_TYPE_CONVERT_IS_TIMER_APB1(PERIPH) (((PERIPH) == TIM2) || \
+                                                  ((PERIPH) == TIM3) || \
+                                                  ((PERIPH) == TIM4))
 
 // Function Declarations
 

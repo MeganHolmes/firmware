@@ -47,16 +47,14 @@ void HW_timer_init(void)
     for (uint8_t timerIdx = 0; timerIdx < HW_TIMER_COUNT; timerIdx++)
     {
         // Enable the RCC clock for each timer being used
-        // if (HW_ST_TYPE_CONVERT_IS_TIMER_APB1(hw_timer_config[timerIdx].peripheral))
-        // {
-        //     RCC->APB1ENR |= HW_ST_type_convert_timerTypedefToRccAPBPeriph(hw_timer_config[timerIdx].peripheral);
-        // }
-        // else
-        // {
-        //     RCC->APB2ENR |= HW_ST_type_convert_timerTypedefToRccAPBPeriph(hw_timer_config[timerIdx].peripheral);
-        // }
-
-        RCC->APB1ENR = 0xFFFFFFFF;
+        if (HW_ST_TYPE_CONVERT_IS_TIMER_APB1(hw_timer_config[timerIdx].peripheral))
+        {
+            RCC->APB1ENR |= HW_ST_type_convert_timerTypedefToRccAPBPeriph(hw_timer_config[timerIdx].peripheral);
+        }
+        else
+        {
+            RCC->APB2ENR |= HW_ST_type_convert_timerTypedefToRccAPBPeriph(hw_timer_config[timerIdx].peripheral);
+        }
 
         // Calculate the timer parameters
         const uint32_t input_frequency = HW_RCC_get_pclk1_hz();
@@ -135,7 +133,7 @@ uint32_t HW_timer_get_system_time_ms(void)
 #if FEATURE_RTC
     system_time = RTC_GetCounter();
 #else
-    bool interrupt_set = hw_timer_config[HW_TIMER_SYSTEM_CLK].peripheral->SR & 1u;
+    const bool interrupt_set = hw_timer_config[HW_TIMER_SYSTEM_CLK].peripheral->SR & 1u;
 
     if (interrupt_set)
     {

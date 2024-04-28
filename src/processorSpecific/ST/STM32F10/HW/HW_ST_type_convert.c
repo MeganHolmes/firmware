@@ -63,70 +63,21 @@ uint32_t HW_ST_type_convert_timerTypedefToRccAPBPeriph(TIM_TypeDef* timer)
 {
     uint32_t converted_ret = 0u;
 
-    // pointers are not permitted as case values :(
     if (timer == TIM1)
     {
-        converted_ret = RCC_APB2Periph_TIM1;
+        converted_ret = RCC_APB2ENR_TIM1EN;
     }
     else if (timer == TIM2)
     {
-        converted_ret = RCC_APB1Periph_TIM2;
+        converted_ret = RCC_APB1ENR_TIM2EN;
     }
     else if (timer == TIM3)
     {
-        converted_ret = RCC_APB1Periph_TIM3;
+        converted_ret = RCC_APB1ENR_TIM3EN;
     }
     else if (timer == TIM4)
     {
-        converted_ret = RCC_APB1Periph_TIM4;
-    }
-    else if (timer == TIM5)
-    {
-        converted_ret = RCC_APB1Periph_TIM5;
-    }
-    else if (timer == TIM7)
-    {
-        converted_ret = RCC_APB1Periph_TIM7;
-    }
-    else if (timer == TIM8)
-    {
-        converted_ret = RCC_APB2Periph_TIM8;
-    }
-    else if (timer == TIM9)
-    {
-        converted_ret = RCC_APB2Periph_TIM9;
-    }
-    else if (timer == TIM10)
-    {
-        converted_ret = RCC_APB2Periph_TIM10;
-    }
-    else if (timer == TIM11)
-    {
-        converted_ret = RCC_APB2Periph_TIM11;
-    }
-    else if (timer == TIM12)
-    {
-        converted_ret = RCC_APB1Periph_TIM12;
-    }
-    else if (timer == TIM13)
-    {
-        converted_ret = RCC_APB1Periph_TIM13;
-    }
-    else if (timer == TIM14)
-    {
-        converted_ret = RCC_APB1Periph_TIM14;
-    }
-    else if (timer == TIM15)
-    {
-        converted_ret = RCC_APB2Periph_TIM15;
-    }
-    else if (timer == TIM16)
-    {
-        converted_ret = RCC_APB2Periph_TIM16;
-    }
-    else if (timer == TIM17)
-    {
-        converted_ret = RCC_APB2Periph_TIM17;
+        converted_ret = RCC_APB1ENR_TIM4EN;
     }
 
     return converted_ret;

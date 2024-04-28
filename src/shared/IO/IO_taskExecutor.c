@@ -74,7 +74,7 @@ int main(void)
         // Assume 1ms always needs to run.
         IO_taskExecutor_1ms();
 
-        volatile uint32_t current_time = HW_timer_get_system_time_ms();
+        const uint32_t current_time = HW_timer_get_system_time_ms();
 
         if (TIME_10MS <= (current_time - IO_taskExecutor_private_data.last_10ms_timestamp))
         {
