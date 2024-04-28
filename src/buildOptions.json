@@ -1,13 +1,19 @@
 {
     "helloWorld": {
-        "outputName": "helloWorld.exe",
+        "outputName": "helloWorld",
         "projectDir": "projectSpecific/helloWorld",
         "mainFile": "helloWorld.c"
     },
     "blinky": {
-        "outputName": "blinky.elf",
+        "outputName": "blinky",
         "projectDir": "projectSpecific/blinky",
         "processorDir": "processorSpecific/ST/STM32F10",
         "mainFile": "blinky.c"
+    },
+    "balancer": {
+        "outputName": "balancer",
+        "projectDir": "projectSpecific/balancer",
+        "processorDir": "processorSpecific/ST/STM32F10",
+        "mainFile": "../../shared/IO/IO_taskExecutor.c"
     }
 }

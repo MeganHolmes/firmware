@@ -41,13 +41,16 @@ def checkForDuplicates(features, sources):
             Exit(1)
 
 
-def outputCDefsFile(features):
-    with open("../build/" + projectDir + "/cDefs.h", "w") as cDefsFile:
-        cDefsFile.write("// This file contains all the features enabled during the build as flags for use in C code.\n")
-        cDefsFile.write("// See outputCDefs in src/Sconscript.\n")
+def generateFeatureDefinesFile(features):
+    with open("../build/" + projectDir + "/featureDefines.h", "w") as featureDefinesFile:
+        featureDefinesFile.write("// This file contains all the features enabled during the build as flags for use in C code.\n")
+        featureDefinesFile.write("// See generateFeatureDefinesFile in src/Sconscript.\n")
+        featureDefinesFile.write("#ifndef __FEATURE_DEFINES_H__\n")
+        featureDefinesFile.write("#define __FEATURE_DEFINES_H__\n\n")
         for feature in features:
-            cDefsFile.write("#define " + feature + " 1U\n")
-        cDefsFile.close()
+            featureDefinesFile.write("#define " + feature + " 1U\n")
+        featureDefinesFile.write("#endif // __FEATURE_DEFINES_H__\n")
+        featureDefinesFile.close()
 
 
 Import('env', 'project', 'verbose')
@@ -99,15 +102,22 @@ if processorDir is not None:
 sources.insert(0, mainFile)
 
 # TODO: https://github.com/MeganHolmes/firmware/issues/14 Make this less hard-coded
-env.Append(CPPPATH = [projectDir, 'shared/app', 'shared/IO', 'shared/HW', 'shared/RTOS', projectDir + '/app', projectDir + '/HW'])
+env.Append(CPPPATH = [projectDir,
+                      'shared/app',
+                      'shared/IO',
+                      'shared/HW',
+                      'shared/RTOS/includes',
+                      'shared/universal',
+                      projectDir + '/app',
+                      projectDir + '/HW',])
 
 if verbose:
     print("Checking for duplicate features, sources, and include paths.")
 checkForDuplicates(featuresEnabled, sources)
 
 if verbose:
-    print("Generating CDefs file.")
-outputCDefsFile(featuresEnabled)
+    print("Generating featureDefines file.")
+generateFeatureDefinesFile(featuresEnabled)
 
 # TODO: https://github.com/MeganHolmes/firmware/issues/12 Create a list of all features that are enabled, and include how they were turned on. From manual featureSelections
 # or from being activated by higher-level features.
@@ -146,5 +156,8 @@ if verbose:
     for path in env['CPPPATH']:
         print("    " + path)
     # print(env.Dump()) # Uncomment to check all environment variables
+
+# Output a memory map file
+env.Append(LINKFLAGS = ['-Wl,-Map={},--cref'.format("build/" + outputName + ".memmap")])
 
 env.Program(source=sources, target=outputName)

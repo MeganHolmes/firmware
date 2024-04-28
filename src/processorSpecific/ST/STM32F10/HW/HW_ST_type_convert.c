@@ -4,6 +4,7 @@
 // ST Includes
 #include "stm32f10x.h"
 #include "stm32f10x_rcc.h"
+#include "stm32f10x_tim.h"
 
 // Function Definitions
 
@@ -53,6 +54,30 @@ uint32_t HW_ST_type_convert_gpioTypedefToRccAPB2Periph(uint32_t gpio)
             converted_ret = 0u;
             break;
         }
+    }
+
+    return converted_ret;
+}
+
+uint32_t HW_ST_type_convert_timerTypedefToRccAPBPeriph(TIM_TypeDef* timer)
+{
+    uint32_t converted_ret = 0u;
+
+    if (timer == TIM1)
+    {
+        converted_ret = RCC_APB2ENR_TIM1EN;
+    }
+    else if (timer == TIM2)
+    {
+        converted_ret = RCC_APB1ENR_TIM2EN;
+    }
+    else if (timer == TIM3)
+    {
+        converted_ret = RCC_APB1ENR_TIM3EN;
+    }
+    else if (timer == TIM4)
+    {
+        converted_ret = RCC_APB1ENR_TIM4EN;
     }
 
     return converted_ret;

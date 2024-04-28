@@ -12,7 +12,7 @@
 
 // Public Functions
 
-void HW_GPIO_Init(void);
+void HW_GPIO_init(void);
 void HW_GPIO_setEnableStatus(HW_GPIO_Pin pinID, bool enable);
 void HW_GPIO_togglePin(HW_GPIO_Pin pinID);
 GPIO_TypeDef* HW_GPIO_getPortForGPIOID(HW_GPIO_Pin pinID);

@@ -3,7 +3,7 @@
 // Project Includes
 #include "app_heartbeat.h"
 #include "HW_GPIO.h"
-#include "cDefs.h"
+#include "featureDefines.h"
 
 // Defines
 

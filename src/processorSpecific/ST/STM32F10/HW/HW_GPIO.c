@@ -12,7 +12,7 @@ extern HW_GPIO_Data hw_gpio_config[HW_GPIO_COUNT];
 
 // Function Definitions
 
-void HW_GPIO_Init(void)
+void HW_GPIO_init(void)
 {
     for (uint8_t pinIdx = 0; pinIdx < HW_GPIO_COUNT; pinIdx++)
     {

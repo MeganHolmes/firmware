@@ -1,0 +1,14 @@
+{
+    "FEATURE_GPIO": {
+        "SOURCES": ["projectSpecific/balancer/HW/HW_GPIO_projectSpecific.c"],
+        "DEPENDENCIES": ["FEATURE_RCC"]
+    },
+    "FEATURE_HEARTBEAT": {
+        "SOURCES": ["projectSpecific/balancer/app/app_heartbeat_projectSpecific.c"],
+        "DEPENDENCIES": ["FEATURE_GPIO"]
+    },
+    "FEATURE_TIMER": {
+        "SOURCES": ["projectSpecific/balancer/HW/HW_timer_projectSpecific.c"],
+        "DEPENDENCIES": ["FEATURE_RCC"]
+    }
+}
