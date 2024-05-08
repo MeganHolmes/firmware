@@ -14,5 +14,9 @@
                     "RTOS/queue.c",
                     "RTOS/tasks.c"],
         "DEPENDENCIES": []
+    },
+    "FEATURE_I2C": {
+        "SOURCES": ["shared/IO/IO_I2C.c"],
+        "DEPENDENCIES": []
     }
 }

@@ -13,5 +13,8 @@
     },
     "FEATURE_TIMER": {
         "active": true
+    },
+    "FEATURE_I2C": {
+        "active": true
     }
 }

@@ -23,5 +23,9 @@
     "FEATURE_TIMER": {
         "SOURCES": ["processorSpecific/ST/STM32F10/HW/HW_timer.c"],
         "DEPENDENCIES": ["FEATURE_RCC"]
+    },
+    "FEATURE_I2C": {
+        "SOURCES": ["processorSpecific/ST/STM32F10/HW/HW_I2C.c"],
+        "DEPENDENCIES": []
     }
 }

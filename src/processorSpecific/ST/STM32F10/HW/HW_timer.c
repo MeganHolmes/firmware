@@ -6,7 +6,6 @@
 
 // ST Includes
 #include "stm32f10x.h"
-#include "stm32f10x_rtc.h"
 
 // Project Includes
 #include "HW_RCC.h"
@@ -23,6 +22,10 @@
 #define MICROSECONDS_TO_HZ(us) 1000000 / us
 
 #define TIM_UIF 0x01
+
+#define TIM_CKD_DIV1 0x000
+#define TIM_CKD_DIV2 0x100
+#define TIM_CKD_DIV4 0x200
 
 // Static data
 static uint16_t system_timer_overflow_count = 0u;

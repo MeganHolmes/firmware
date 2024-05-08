@@ -12,6 +12,9 @@
 #include "HW_RCC.h"
 #include "HW_timer.h"
 #include "HW_GPIO.h"
+#include "HW_I2C.h"
+
+#include "IO_I2C.h"
 
 #include "app_heartbeat.h"
 
@@ -36,29 +39,29 @@ static IO_taskExecutor_data IO_taskExecutor_private_data;
 
 // Private function declarations
 
-bool IO_taskExecutor_HW_init(void);
-void IO_taskExecutor_IO_init(void);
-void IO_taskExecutor_app_init(void);
+static bool IO_taskExecutor_HW_init(void);
+static void IO_taskExecutor_IO_init(void);
+static void IO_taskExecutor_app_init(void);
 
-void IO_taskExecutor_1ms(void);
-void IO_taskExecutor_10ms(void);
-void IO_taskExecutor_100ms(void);
-void IO_taskExecutor_1000ms(void);
+static void IO_taskExecutor_1ms(void);
+static void IO_taskExecutor_10ms(void);
+static void IO_taskExecutor_100ms(void);
+static void IO_taskExecutor_1000ms(void);
 
-void IO_taskExecutor_HW_1ms(void);
-void IO_taskExecutor_HW_10ms(void);
-void IO_taskExecutor_HW_100ms(void);
-void IO_taskExecutor_HW_1000ms(void);
+static void IO_taskExecutor_HW_1ms(void);
+static void IO_taskExecutor_HW_10ms(void);
+static void IO_taskExecutor_HW_100ms(void);
+static void IO_taskExecutor_HW_1000ms(void);
 
-void IO_taskExecutor_IO_1ms(void);
-void IO_taskExecutor_IO_10ms(void);
-void IO_taskExecutor_IO_100ms(void);
-void IO_taskExecutor_IO_1000ms(void);
+static void IO_taskExecutor_IO_1ms(void);
+static void IO_taskExecutor_IO_10ms(void);
+static void IO_taskExecutor_IO_100ms(void);
+static void IO_taskExecutor_IO_1000ms(void);
 
-void IO_taskExecutor_app_1ms(void);
-void IO_taskExecutor_app_10ms(void);
-void IO_taskExecutor_app_100ms(void);
-void IO_taskExecutor_app_1000ms(void);
+static void IO_taskExecutor_app_1ms(void);
+static void IO_taskExecutor_app_10ms(void);
+static void IO_taskExecutor_app_100ms(void);
+static void IO_taskExecutor_app_1000ms(void);
 
 
 // Function Definitions
@@ -95,10 +98,11 @@ int main(void)
         }
     }
 
+    // Should never get here.
     return 1;
 }
 
-bool IO_taskExecutor_HW_init(void)
+static bool IO_taskExecutor_HW_init(void)
 {
     bool error_present = false;
 
@@ -114,42 +118,46 @@ bool IO_taskExecutor_HW_init(void)
     HW_GPIO_init();
 #endif
 
+#if FEATURE_I2C
+    HW_I2C_init();
+#endif
+
     return error_present;
 }
 
-void IO_taskExecutor_IO_init(void)
+static void IO_taskExecutor_IO_init(void)
 {
 
 }
 
-void IO_taskExecutor_app_init(void)
+static void IO_taskExecutor_app_init(void)
 {
 
 }
 
 
-void IO_taskExecutor_1ms(void)
+static void IO_taskExecutor_1ms(void)
 {
     IO_taskExecutor_HW_1ms();
     IO_taskExecutor_IO_1ms();
     IO_taskExecutor_app_1ms();
 }
 
-void IO_taskExecutor_10ms(void)
+static void IO_taskExecutor_10ms(void)
 {
     IO_taskExecutor_HW_10ms();
     IO_taskExecutor_IO_10ms();
     IO_taskExecutor_app_10ms();
 }
 
-void IO_taskExecutor_100ms(void)
+static void IO_taskExecutor_100ms(void)
 {
     IO_taskExecutor_HW_100ms();
     IO_taskExecutor_IO_100ms();
     IO_taskExecutor_app_100ms();
 }
 
-void IO_taskExecutor_1000ms(void)
+static void IO_taskExecutor_1000ms(void)
 {
     IO_taskExecutor_HW_1000ms();
     IO_taskExecutor_IO_1000ms();
@@ -157,64 +165,66 @@ void IO_taskExecutor_1000ms(void)
 }
 
 
-void IO_taskExecutor_HW_1ms(void)
+static void IO_taskExecutor_HW_1ms(void)
 {
 
 }
 
-void IO_taskExecutor_HW_10ms(void)
+static void IO_taskExecutor_HW_10ms(void)
 {
 
 }
 
-void IO_taskExecutor_HW_100ms(void)
+static void IO_taskExecutor_HW_100ms(void)
 {
 
 }
 
-void IO_taskExecutor_HW_1000ms(void)
-{
-
-}
-
-
-void IO_taskExecutor_IO_1ms(void)
-{
-
-}
-
-void IO_taskExecutor_IO_10ms(void)
-{
-
-}
-
-void IO_taskExecutor_IO_100ms(void)
-{
-
-}
-
-void IO_taskExecutor_IO_1000ms(void)
+static void IO_taskExecutor_HW_1000ms(void)
 {
 
 }
 
 
-void IO_taskExecutor_app_1ms(void)
+static void IO_taskExecutor_IO_1ms(void)
 {
 
 }
 
-void IO_taskExecutor_app_10ms(void)
+static void IO_taskExecutor_IO_10ms(void)
+{
+#if FEATURE_I2C
+    IO_I2C_run();
+#endif
+}
+
+static void IO_taskExecutor_IO_100ms(void)
 {
 
 }
 
-void IO_taskExecutor_app_100ms(void)
+static void IO_taskExecutor_IO_1000ms(void)
 {
 
 }
 
-void IO_taskExecutor_app_1000ms(void)
+
+static void IO_taskExecutor_app_1ms(void)
+{
+
+}
+
+static void IO_taskExecutor_app_10ms(void)
+{
+
+}
+
+static void IO_taskExecutor_app_100ms(void)
+{
+
+}
+
+static void IO_taskExecutor_app_1000ms(void)
 {
 #if FEATURE_HEARTBEAT
     app_heartbeat_run();

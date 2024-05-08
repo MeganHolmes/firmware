@@ -1,0 +1,6 @@
+#ifndef __HW_I2C_PROJECT_SPECIFIC_H__
+#define __HW_I2C_PROJECT_SPECIFIC_H__
+
+
+
+#endif // __HW_I2C_PROJECT_SPECIFIC_H__
